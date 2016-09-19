@@ -1,5 +1,7 @@
 FROM elasticsearch
 
+MAINTAINER airforon <github@air-foron.com>
+
 RUN \
 	   bin/plugin install mobz/elasticsearch-head
 
