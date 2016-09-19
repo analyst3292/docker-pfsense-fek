@@ -1,6 +1,6 @@
 elasticsearch:
-  build: es
-  container_name: es
+  build: elasticsearch
+  container_name: elasticsearch
   ports:
     - 9200:9200
 logstash:
