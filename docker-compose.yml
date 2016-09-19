@@ -1,18 +1,18 @@
 elasticsearch:
   build: elasticsearch
-  container_name: elasticsearch
+  container_name: elasticsearch_1
   ports:
     - 9200:9200
 logstash:
   build: logstash
-  container_name: logstash
+  container_name: logstash_1
   ports:
     - 9514:9514
   links:
     - elasticsearch
 kibana:
   build: kibana
-  container_name: kibana
+  container_name: kibana_1
   ports:
     - 9204:5601
   environment:
