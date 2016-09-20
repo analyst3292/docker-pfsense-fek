@@ -13,6 +13,6 @@ RUN \
     && rm -f /etc/logstash/GeoLite/GeoIPASNum.dat.gz
 
 
-COPY conf/10.conf /etc/logstash/conf.d
+COPY conf /etc/logstash/conf.d
 
 CMD ["-f", "/etc/logstash/conf.d/*.conf"]
