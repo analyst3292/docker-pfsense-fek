@@ -3,7 +3,7 @@ FROM elasticsearch
 MAINTAINER airforon <github@air-foron.com>
 
 RUN \
-	   bin/plugin install mobz/elasticsearch-head
+	   bin/plugin install lmenezes/elasticsearch-kopf/master
 
 EXPOSE 9200
 
