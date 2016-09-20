@@ -15,4 +15,4 @@ RUN \
 
 COPY conf/10.conf /etc/logstash/conf.d
 
-CMD ["-f", "/etc/logstash/conf.d/*"]
+CMD ["-f", "/etc/logstash/conf.d/*.conf"]
