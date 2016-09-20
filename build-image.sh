@@ -9,10 +9,10 @@ docker-compose rm -f
 docker images | grep ^dockerpfsenseelk | awk '{print $3}' | xargs docker rmi
 docker images | grep ^'<none>' | awk '{print $3}' | xargs docker rmi
 
-docker build -t logstash ./logstash
+docker build -t fluentd ./fluentd
 
 
-docker-compose up -d elasticsearch logstash kibana
+docker-compose up -d elasticsearch fluentd kibana
 
 
 docker-compose logs -f
