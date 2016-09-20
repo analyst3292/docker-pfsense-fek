@@ -3,9 +3,9 @@ elasticsearch:
   container_name: elasticsearch
   ports:
     - 9200:9200
-fluentd:
-  build: fluentd
-  container_name: fluentd
+logstash:
+  build: logstash
+  container_name: logstash
   ports:
     - "5514:5514/udp"
   links:
