@@ -11,6 +11,6 @@ RUN \
 	&& gem install fluent-plugin-rewrite-tag-filter \
 	&& gem install fluent-plugin-geoip-filter
 
-EXPOSE 24284
+EXPOSE 5514
 
 CMD fluentd -c /fluentd/etc/fluent.conf -p /fluentd/plugins -vv
