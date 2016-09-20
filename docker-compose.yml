@@ -7,7 +7,7 @@ fluentd:
   build: fluentd
   container_name: fluentd
   ports:
-    - 5514:5514
+    - "5514:5514/udp"
   links:
     - elasticsearch
 kibana:
