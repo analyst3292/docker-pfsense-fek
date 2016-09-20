@@ -15,4 +15,6 @@ RUN \
 
 COPY conf /etc/logstash/conf.d
 
+EXPOSE 5514/udp
+
 CMD ["-f", "/etc/logstash/conf.d/*.conf"]
