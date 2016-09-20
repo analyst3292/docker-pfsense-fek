@@ -3,11 +3,11 @@ elasticsearch:
   container_name: elasticsearch
   ports:
     - 9200:9200
-logstash:
-  build: logstash
-  container_name: logstash
+fluentd:
+  build: fluentd
+  container_name: fluentd
   ports:
-    - 9514:9514
+    - 24224:24224
   links:
     - elasticsearch
 kibana:
