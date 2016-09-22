@@ -9,33 +9,34 @@
 #
 # %{LOG_DATA}%{IP_SPECIFIC_DATA}%{IP_DATA}%{PROTOCOL_DATA}
 
-LOG_DATA (%{INT:rule}),(%{INT:sub_rule}),,(%{INT:tracker}),(%{WORD:iface}),(%{NOTSPACE:reason}),(%{WORD:action}),(%{WORD:rule_direction}),(%{INT:ip_ver}),
+LOG_DATA (%{INT:rule}),(%{INT:sub_rule}),(%{WORD:anchor}),(%{INT:tracker}),(%{WORD:iface}),(%{WORD:reason}),(%{WORD:action}),(%{WORD:rule_direction}),(%{INT:ip_ver}),
 IP_SPECIFIC_DATA (%{IPv4_SPECIFIC_DATA}|%{IPv6_SPECIFIC_DATA})
 IPv4_SPECIFIC_DATA (%{BASE16NUM:tos}),,(%{INT:ttl}),(%{INT:id}),(%{INT:offset}),(%{WORD:flags}),(%{INT:proto_id}),(%{WORD:proto}),
 IPv6_SPECIFIC_DATA (%{BASE16NUM:class}),(%{DATA:flow_label}),(%{INT:hop_limit}),(%{WORD:proto}),(%{INT:proto_id}),
 IP_DATA (%{INT:length}),(%{IP:src_ip}),(%{IP:dest_ip}),
-PROTOCOL_DATA (%{TCP_DATA}|%{UDP_DATA}|%{ICMP_DATA}|%{PFSYNC_DATA}|%{CARP_DATA})
+PROTOCOL_DATA (%{TCP_DATA}|%{UDP_DATA}|%{ICMP_DATA}|%{CARP_DATA})
+
+
+## TCP
 TCP_DATA (%{INT:src_port}),(%{INT:dest_port}),(%{INT:data_length}),(%{WORD:tcp_flags}),(%{NOTSPACE:sequence_number}),(%{INT:ack_number}?),(%{INT:tcp_window}),(%{DATA:urg_data}),(%{DATA:tcp_options})
+
+
+## UDP
 UDP_DATA (%{INT:src_port}),(%{INT:dest_port}),(%{INT:data_length})
-ICMP_DATA (%{ICMP_TYPE}%{ICMP_RESPONSE})
-PFSYNC_DATA (datalength=%{INT:data_length})
-ICMP_TYPE (?<icmp_type>(request|reply|unreachproto|unreachport|unreach|timeexceed|paramprob|redirect|maskreply|needfrag|tstamp|tstampreply)),
-ICMP_RESPONSE (%{ICMP_ECHO_REQ_REPLY}|%{ICMP_UNREACHPORT}| %{ICMP_UNREACHPROTO}|%{ICMP_UNREACHABLE}|%{ICMP_NEED_FLAG}|%{ICMP_TSTAMP}|%{ICMP_TSTAMP_REPLY})
-ICMP_ECHO_REQ_REPLY (%{INT:icmp_echo_id}),(%{INT:icmp_echo_sequence})
-ICMP_UNREACHPORT (%{IP:icmp_unreachport_dest_ip}),(%{WORD:icmp_unreachport_protocol}),(%{INT:icmp_unreachport_port})
-ICMP_UNREACHPROTO (%{IP:icmp_unreach_dest_ip}),(%{WORD:icmp_unreachproto_protocol})
-ICMP_UNREACHABLE (%{GREEDYDATA:icmp_unreachable})
-ICMP_NEED_FLAG (%{IP:icmp_need_flag_ip}),(%{INT:icmp_need_flag_mtu})
-ICMP_TSTAMP (%{INT:icmp_tstamp_id}),(%{INT:icmp_tstamp_sequence})
-ICMP_TSTAMP_REPLY (%{INT:icmp_tstamp_reply_id}),(%{INT:icmp_tstamp_reply_sequence}),(%{INT:icmp_tstamp_reply_otime}),(%{INT:icmp_tstamp_reply_rtime}),(%{INT:icmp_tstamp_reply_ttime})
-CARP_DATA (%{INT:src_port}),(%{INT:dest_port}),(%{WORD:carp_type}),(%{INT:carp_ttl}),(%{INT:carp_vhid}),(%{INT:carp_version}),(%{INT:carp_advbase}),(%{INT:carp_advskew})
 
-# DHCP
 
-DHCPD (%{DHCPDISCOVER}|%{DHCPOFFER}|%{DHCPREQUEST}|%{DHCPACK}|%{DHCPINFORM}|%{DHCPRELEASE})
-DHCPDISCOVER %{WORD:dhcp_action} from %{COMMONMAC:dhcp_client_mac}%{SPACE}(\(%{GREEDYDATA:dhcp_client_hostname}\))? via (?<dhcp_client_vlan>[0-9a-z_]*)(: %{GREEDYDATA:dhcp_load_balance})?
-DHCPOFFER %{WORD:dhcp_action} on %{IPV4:dhcp_client_ip} to %{COMMONMAC:dhcp_client_mac}%{SPACE}(\(%{GREEDYDATA:dhcp_client_hostname}\))? via (?<dhcp_client_vlan>[0-9a-z_]*)
-DHCPREQUEST %{WORD:dhcp_action} for %{IPV4:dhcp_client_ip}%{SPACE}(\(%{IPV4:dhcp_ip_unknown}\))? from %{COMMONMAC:dhcp_client_mac}%{SPACE}(\(%{GREEDYDATA:dhcp_client_hostname}\))? via (?<dhcp_client_vlan>[0-9a-z_]*)(: %{GREEDYDATA:dhcp_request_message})?
-DHCPACK %{WORD:dhcp_action} on %{IPV4:dhcp_client_ip} to %{COMMONMAC:dhcp_client_mac}%{SPACE}(\(%{GREEDYDATA:dhcp_client_hostname}\))? via (?<dhcp_client_vlan>[0-9a-z_]*)
-DHCPINFORM %{WORD:dhcp_action} from %{IPV4:dhcp_client_ip} via %(?<dhcp_client_vlan>[0-9a-z_]*)
-DHCPRELEASE
+## ICMP
+ICMP_DATA (%{ICMP_TYPE},%{ICMP_RESPONSE})
+ICMP_TYPE ("request"|"reply"|"unreachproto"|"unreachport"|"unreach"|"timexceed"|"paramprob"|"redirect"|"maskreply"|"needfrag"|"tstamp"|"tstampreply")
+ICMP_RESPONSE (%{ICMP_ECHO}|%{ICMP_UNREACHPROTO}|%{ICMP_UNREACHPORT}|%{ICMP_OTHER_UNREACHABLE}|%{ICMP_NEED_FLAG}|%{ICMP_TSTAMP}|%{ICMP_TSTAMP_REPLY}|%{WORD:ICMP_DEFAULT})
+ICMP_ECHO (%{INT:icmp_echo_id}),(%{INT:icmp_echo_sequence})
+ICMP_UNREACHPROTO (%{IP:icmp_unreach_dest_ip}),(%{INT:icmp_unreachproto_protocol})
+ICMP_UNREACHPORT (%{IP:icmp_dest_ip}),(%{WORD:icmp_unreachport_protocol}),(%{INT:icmp_unreachport_port})
+ICMP_OTHER_UNREACHABLE (%{WORD:icmp_unreachable})
+ICMP_NEED_FLAG (%{IP:icmp_dest_ip}),(%{INT:icmp_mtu})
+ICMP_TSTAMP (%{INT:icmp_id}),(%{INT:icmp_sequence})
+ICMP_TSTAMPREPLY (%{INT:icmp_id}),(%{INT:icmp_sequence}),(%{INT:icmp_otime}),(%{INT:icmp_rtime}),(%{INT:icmp_tstamp_ttime})
+
+
+## CARP
+CARP_DATA (%{WORD:carp_type}),(%{INT:carp_ttl}),(%{INT:carp_vhid}),(%{INT:carp_ver}),(%{INT:carp_advbase}),(%{INT:carp_advskew})
