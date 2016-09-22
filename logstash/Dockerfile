@@ -3,8 +3,9 @@ FROM logstash:latest
 MAINTAINER airforon <github@air-foron.com>
 
 RUN \
-       curl -fSL https://gist.githubusercontent.com/bradvido/4e6501222b8f7dbe3ba8/raw/pfsense2-2.grok \
-            -o /etc/logstash/conf.d/patterns \
+    curl -fSL https://gist.githubusercontent.com/FoxBoxsnet/9eace3da1cd77f91ada5b55a5ebfd73c/raw/pfsense2-2.grok \
+        -o /etc/logstash/patterns \
+    \
     && mkdir -p /etc/logstash/GeoLite \
     && curl -fSL http://download.maxmind.com/download/geoip/database/asnum/GeoIPASNum.dat.gz \
         -o /etc/logstash/GeoLite/GeoIPASNum.dat.gz \
