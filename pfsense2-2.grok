@@ -3,7 +3,7 @@
 # GROK Patterns for pfSense 2.2 Logging Format
 # 
 # Created 27 Jan 2015 by J. Pisano (Handles TCP, UDP, and ICMP log entries)
-# Edited 19 Sep 2016 by FoxBoxsnet
+# Edited 22 Sep 2016 by FoxBoxsnet
 #
 # Usage: Use with following GROK match pattern
 #
