@@ -14,7 +14,7 @@ IP_SPECIFIC_DATA (%{IPv4_SPECIFIC_DATA}|%{IPv6_SPECIFIC_DATA})
 IPv4_SPECIFIC_DATA (%{BASE16NUM:tos}),,(%{INT:ttl}),(%{INT:id}),(%{INT:offset}),(%{WORD:flags}),(%{INT:proto_id}),(%{WORD:proto}),
 IPv6_SPECIFIC_DATA (%{BASE16NUM:class}),(%{DATA:flow_label}),(%{INT:hop_limit}),(%{WORD:proto}),(%{INT:proto_id}),
 IP_DATA (%{INT:length}),(%{IP:src_ip}),(%{IP:dest_ip}),
-PROTOCOL_DATA (%{TCP_DATA}|%{UDP_DATA}|%{ICMP_DATA}|%{CARP_DATA})
+PROTOCOL_DATA (%{TCP_DATA}|%{UDP_DATA}|%{ICMP_DATA})
 TCP_DATA (%{INT:src_port}),(%{INT:dest_port}),(%{INT:data_length}),(%{WORD:tcp_flags}),(%{NOTSPACE:sequence_number}),(%{INT:ack_number}?),(%{INT:tcp_window}),(%{DATA:urg_data}),(%{DATA:tcp_options})
 UDP_DATA (%{INT:src_port}),(%{INT:dest_port}),(%{INT:data_length})
 ICMP_DATA (%{ICMP_TYPE}%{ICMP_RESPONSE})
@@ -28,4 +28,3 @@ ICMP_UNREACHABLE (%{GREEDYDATA:icmp_unreachable})
 ICMP_NEED_FLAG (%{IP:icmp_need_flag_ip}),(%{INT:icmp_need_flag_mtu})
 ICMP_TSTAMP (%{INT:icmp_tstamp_id}),(%{INT:icmp_tstamp_sequence})
 ICMP_TSTAMP_REPLY (%{INT:icmp_tstamp_reply_id}),(%{INT:icmp_tstamp_reply_sequence}),(%{INT:icmp_tstamp_reply_otime}),(%{INT:icmp_tstamp_reply_rtime}),(%{INT:icmp_tstamp_reply_ttime})
-CARP_DATA (%{WORD:carp_type}),(%{INT:catp_ttl}),(%{INT:carp_vhid}),(%{INT:carp_ver}),(%{INT:carp_advbase}),(%{INT:carp_advskew})
