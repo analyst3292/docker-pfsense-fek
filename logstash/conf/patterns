@@ -14,7 +14,9 @@ IP_SPECIFIC_DATA (%{IPv4_SPECIFIC_DATA}|%{IPv6_SPECIFIC_DATA})
 IPv4_SPECIFIC_DATA (%{BASE16NUM:tos}),,(%{INT:ttl}),(%{INT:id}),(%{INT:offset}),(%{WORD:flags}),(%{INT:proto_id}),(%{WORD:proto}),
 IPv6_SPECIFIC_DATA (%{BASE16NUM:class}),(%{BASE16NUM:flow_label}),(%{INT:hop_limit}),(%{WORD:proto}),(%{INT:proto_id}),
 
-IP_DATA (%{INT:length}),(%{IP:src_ip}),(%{IP:dest_ip}),
+IP_DATA (%{IP_DATA_IPv4}|%{IP_DATA_IPv6}),
+IP_DATA_IPv4 (%{INT:length}),(%{IPV4:src_ip}),(%{IPV4:dest_ip})
+IP_DATA_IPv6 (%{INT:length}),(%{IPV6:src_ip}),(%{IPV6:dest_ip})
 
 PROTOCOL_DATA (%{TCP_DATA}|%{UDP_DATA}|%{ICMP_DATA}|%{PFSYNC_DATA}|%{CARP_DATA})
 
