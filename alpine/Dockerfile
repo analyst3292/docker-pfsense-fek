@@ -22,6 +22,8 @@ RUN \
     && cd /usr/src \
     && echo "`cat logstash-$logstash_VERSION.tar.gz.sha1.txt`" | sha1sum -c - \
     && tar xzf /usr/src/logstash-$logstash_VERSION.tar.gz -C /opt/logstash --strip=1 \
+    && gem update --no-document \
+    && gem cleanup \
     && apk del .build-logstash
 
 
