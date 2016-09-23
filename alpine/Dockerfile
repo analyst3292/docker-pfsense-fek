@@ -19,7 +19,8 @@ RUN \
     && curl -fSL https://download.elastic.co/logstash/logstash/logstash-$logstash_VERSION.tar.gz.sha1.txt \
         -o /usr/src/logstash-$logstash_VERSION.tar.gz.sha1.txt \
     && mkdir -p /opt/logstash \
-    && echo "`cat /usr/src/logstash-$logstash_VERSION.tar.gz.sha1.txt` /usr/src/logstash-$logstash_VERSION.tar.gz" | sha1sum -c - \
+    && cd /usr/src \
+    && echo "`cat logstash-$logstash_VERSION.tar.gz.sha1.txt`" | sha1sum -c - \
     && tar xzf /usr/src/logstash-$logstash_VERSION.tar.gz -C /opt/logstash --strip=1 \
     && apk del .build-logstash
 
