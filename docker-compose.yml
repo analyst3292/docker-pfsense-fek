@@ -1,8 +1,12 @@
 elasticsearch:
-  build: elasticsearch
-  container_name: elasticsearch
+  image: es
+  container_name: es
   ports:
     - 9200:9200
+  environment:
+    CLUSTER_NAME: "es"
+    NODE_NAME: "node0"
+    NODE_RACK: "es1"
 logstash:
   build: logstash/5.0.0
   container_name: logstash
