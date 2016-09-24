@@ -3,7 +3,7 @@
 set -e
 CONFIG_FILE=/etc/logstash/conf.d/11-pfsense.logstash.conf
 
-if [ -n "$NODE_RACK" ];then
+if [ -n "$TIMEZONE" ];then
 	echo "TIMEZONE change : UTC => $TIMEZONE."
     sed -e "s@"UTC"@"$TIMEZONE"@" -i.bk $CONFIG_FILE
 fi
