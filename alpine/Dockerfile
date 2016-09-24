@@ -5,4 +5,7 @@ MAINTAINER airforon <github@air-foron.com>
 RUN \
        apt-get update \
     && apt-get install -y gem \
-    && rm -rf /var/lib/apt/lists/*
+    && rm -rf /var/lib/apt/lists/* \
+    && gem update \
+    && gem cleanup \
+    && apt-get purge gem
