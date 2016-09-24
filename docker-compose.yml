@@ -1,6 +1,6 @@
 elasticsearch:
   image: es
-  container_name: es
+  container_name: elasticsearch
   ports:
     - 9200:9200
   environment:
