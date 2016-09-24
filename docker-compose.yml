@@ -4,7 +4,7 @@ elasticsearch:
   ports:
     - 9200:9200
 logstash:
-  build: logstash
+  build: logstash/5.0.0
   container_name: logstash
   ports:
     - "5514:5514/udp"
