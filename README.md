@@ -4,4 +4,4 @@ docker-pfsense-elk
 | Name | Variable | Default |
 |:-----|:---------|:--------|
 | TIMEZONE | `TIMEZONE` | UTC |
-| NETS | `DAST_NETS` | "192.168.0.0/24", "fe80::/64" |
+| DAST_NETS | `DAST_NETS` | "192.168.0.254/24", "fe80::/64" |
