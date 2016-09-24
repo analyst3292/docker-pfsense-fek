@@ -14,7 +14,9 @@ RUN \
     && rm -f /etc/logstash/GeoLite/GeoLite2-City.mmdb.gz
 
 COPY conf /etc/logstash/conf.d
+COPY docker-entrypoint.sh /
 
 EXPOSE 5514/udp
 
+ENTRYPOINT ["/docker-entrypoint.sh"]
 CMD ["logstash","-f", "/etc/logstash/conf.d/*.logstash.conf"]
