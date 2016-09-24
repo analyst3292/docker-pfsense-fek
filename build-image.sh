@@ -11,4 +11,5 @@ docker images | grep ^'<none>' | awk '{print $3}' | xargs docker rmi
 
 docker build --no-cache -t dockerpfsensefek_logstash logstash
 
+docker-compose rm -f
 docker-compose up
