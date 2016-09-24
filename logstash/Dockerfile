@@ -1,4 +1,4 @@
-FROM logstash:latest
+FROM logstash:5.0.0
 
 MAINTAINER airforon <github@air-foron.com>
 
