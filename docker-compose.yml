@@ -10,6 +10,8 @@ elasticsearch:
 logstash:
   build: logstash/5.0.0
   container_name: logstash
+  environment:
+    TIMEZONE: "Asia/Tokyo"
   ports:
     - "5514:5514/udp"
   links:
