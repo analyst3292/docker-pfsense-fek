@@ -12,8 +12,6 @@ logstash:
   container_name: logstash
   environment:
     TIMEZONE: "Asia/Tokyo"
-    ADDR_IPV4: "192.168.0.250"
-    ADDR_IPV6: "240d:1a:158:2900::100"
   ports:
     - "5514:5514/udp"
   links:

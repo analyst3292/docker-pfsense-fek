@@ -8,14 +8,6 @@ if [ -n "$TIMEZONE" ];then
     sed -e "s@"UTC"@"$TIMEZONE"@" -i.bk $CONFIG_FILE
 fi
 
-if [ -n "$ADDR_IPV4" ];then
-    sed -e "s@"ADDR_IPV4"@"$ADDR_IPV4"@" -i.bk $CONFIG_FILE
-fi
-
-if [ -n "$ADDR_IPV6" ];then
-    sed -e "s@"ADDR_IPV6"@"$ADDR_IPV6"@" -i.bk $CONFIG_FILE
-fi
-
 # Add logstash as command if needed
 if [ "${1:0:1}" = '-' ]; then
 	set -- logstash "$@"
