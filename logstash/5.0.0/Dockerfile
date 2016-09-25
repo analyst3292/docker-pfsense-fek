@@ -3,8 +3,8 @@ FROM logstash:5.0.0
 MAINTAINER airforon <github@air-foron.com>
 
 RUN \
-       logstash-plugin install logstash-filter-cidr \
-    && curl -fSL https://gist.githubusercontent.com/FoxBoxsnet/9eace3da1cd77f91ada5b55a5ebfd73c/raw/pfsense2-2.grok \
+#       logstash-plugin install logstash-filter-cidr \
+       curl -fSL https://gist.githubusercontent.com/FoxBoxsnet/9eace3da1cd77f91ada5b55a5ebfd73c/raw/pfsense2-2.grok \
         -o /etc/logstash/patterns \
     \
     && mkdir -p /etc/logstash/GeoLite \
