@@ -1,7 +1,7 @@
 #!/bin/bash
 
 set -e
-CONFIG_FILE=/etc/logstash/conf.d/10-pf.filter.logstash.conf
+CONFIG_FILE=/etc/logstash/conf.d/11-pfsense.logstash.conf
 
 if [ -n "$TIMEZONE" ];then
 	echo "TIMEZONE change : UTC => $TIMEZONE."
