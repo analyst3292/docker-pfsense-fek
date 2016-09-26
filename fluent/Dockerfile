@@ -1,9 +1,9 @@
 FROM fluent/fluentd:latest-onbuild
 
-WORKDIR /home/fluent
+
 ENV PATH /home/fluent/.gem/ruby/2.3.0/bin:$PATH
 
-USER root
+USER fluent
 RUN \
 	   gem install fluent-plugin-secure-forward \
 	&& gem install fluent-plugin-elasticsearch \
@@ -12,7 +12,7 @@ RUN \
 
 EXPOSE 5514/udpu
 
-COPY conf/fluent.conf conf/patterns /fluentd/etc/
+COPY conf/fluent.conf conf/patterns /home/fluent/fluentd/etc/
 
-USER fluent
+WORKDIR /home/fluent
 CMD fluentd -c /fluentd/etc/fluent.conf -p /fluentd/plugins -vv
