@@ -3,6 +3,7 @@ FROM fluent/fluentd:latest
 
 ENV PATH /home/fluent/.gem/ruby/2.3.0/bin:$PATH
 
+USER fluent
 RUN \
 	   gem install fluent-plugin-secure-forward \
 	&& gem install fluent-plugin-elasticsearch \
@@ -13,7 +14,7 @@ RUN \
 EXPOSE 5514/udp
 
 COPY conf/ /fluentd/etc/
-COPY plugins/ /fluentd/plugin
+COPY plugins/ /fluentd/plugins
 
 WORKDIR /home/fluent
 CMD fluentd -c /fluentd/etc/fluent.conf -p /fluentd/plugins -vv
