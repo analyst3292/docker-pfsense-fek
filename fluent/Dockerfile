@@ -12,7 +12,7 @@ RUN \
 
 EXPOSE 5514/udpu
 
-COPY conf/ /fluentd/etc/
+COPY conf/fluent.conf conf/patterns /fluentd/etc/
 
 USER fluent
 CMD fluentd -c /fluentd/etc/fluent.conf -p /fluentd/plugins -vv
