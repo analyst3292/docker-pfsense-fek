@@ -17,7 +17,7 @@ sleep 5s
 docker images | grep ^dockerpfsensefek_fluent | awk '{print $3}' | xargs docker rmi
 docker images | grep ^'<none>' | awk '{print $3}' | xargs docker rmi
 
-docker build --no-cache -t dockerpfsensefek_fluent fluent
+docker build -t dockerpfsensefek_fluent fluent
 
 docker run --rm -it \
 	-p "5514:5514/udp" \
