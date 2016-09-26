@@ -1,4 +1,4 @@
-module Fluent
+module Fluent::Plugin
   class PFSense < Input
   Fluent::Plugin.register_input('pfsense', self)
 
