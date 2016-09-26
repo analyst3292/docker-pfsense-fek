@@ -1,6 +1,6 @@
 FROM fluent/fluentd:latest-onbuild
 
-WORKDIR /home/fluent
+
 ENV PATH /home/fluent/.gem/ruby/2.3.0/bin:$PATH
 USER root
 RUN \
@@ -13,7 +13,7 @@ RUN \
 
 EXPOSE 5514/udpu
 
-# COPY /conf/fluent.conf /conf/patterns /home/fluent/fluentd/etc/
+ADD conf/fluent.conf conf/patterns /home/fluent/fluentd/etc/
 
-
+WORKDIR /home/fluent
 CMD fluentd -c /fluentd/etc/fluent.conf -p /fluentd/plugins -vv
