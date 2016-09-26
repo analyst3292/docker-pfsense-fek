@@ -1,3 +1,10 @@
+require 'cool.io'
+require 'yajl'
+
+require 'fluent/plugin/input'
+require 'fluent/config/error'
+require 'fluent/plugin/parser'
+
 module Fluent
   class PFSenseInput < Fluent::Input
     Fluent::Plugin.register_input('pfsense', self)
