@@ -1,4 +1,4 @@
-class PFSense < Input
+class PFSense < Input::SyslogInput
 Fluent::Plugin.register_input('pfsense', self)
 
   helpers :parser, :event_loop
