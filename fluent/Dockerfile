@@ -2,6 +2,8 @@ FROM fluent/fluentd:latest-onbuild
 
 WORKDIR /home/fluent
 ENV PATH /home/fluent/.gem/ruby/2.3.0/bin:$PATH
+
+USER root
 RUN \
 	   gem install fluent-plugin-secure-forward \
 	&& gem install fluent-plugin-elasticsearch \
