@@ -13,6 +13,7 @@ RUN \
 EXPOSE 5514/udp
 
 COPY conf/ /fluentd/etc/
+COPY plugins/ /usr/lib/ruby/gems/2.3.0/gems/fluentd-0.12.29/lib/fluent/plugin
 
 WORKDIR /home/fluent
 CMD fluentd -c /fluentd/etc/fluent.conf -p /fluentd/plugins -vv
