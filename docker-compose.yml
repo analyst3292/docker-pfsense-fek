@@ -1,5 +1,5 @@
 elasticsearch:
-  image: es
+  image: airforon/elasticsearch
   container_name: elasticsearch
   ports:
     - 9200:9200
@@ -17,7 +17,7 @@ logstash:
   links:
     - elasticsearch
 kibana:
-  build: kibana
+  image: airforon/kibana
   container_name: kibana
   ports:
     - 9204:5601
