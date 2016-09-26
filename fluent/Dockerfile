@@ -11,7 +11,7 @@ RUN \
 
 EXPOSE 5514/udp
 
-ADD conf/fluent.conf conf/patterns /home/fluent/fluentd/etc/
+COPY conf/ /home/fluent/fluentd/etc/
 
 WORKDIR /home/fluent
 CMD fluentd -c /fluentd/etc/fluent.conf -p /fluentd/plugins -vv
