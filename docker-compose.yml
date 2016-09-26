@@ -7,9 +7,9 @@ elasticsearch:
     CLUSTER_NAME: "es"
     NODE_NAME: "node0"
     NODE_RACK: "es1"
-logstash:
-  build: logstash/5.0.0
-  container_name: logstash
+fluent:
+  build: fluent
+  container_name: fluent
   environment:
     TIMEZONE: "Asia/Tokyo"
   ports:
