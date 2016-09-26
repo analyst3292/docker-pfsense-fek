@@ -20,6 +20,7 @@ docker images | grep ^'<none>' | awk '{print $3}' | xargs docker rmi
 docker build -t dockerpfsensefek_fluent fluent
 
 docker run --rm -it \
+	--name fl \
 	-p "5514:5514/udp" \
 	-e TIMEZONE="Asia/Tokyo" \
 	dockerpfsensefek_fluent
