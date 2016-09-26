@@ -177,4 +177,3 @@ Fluent::Plugin.register_input('pfsense', self)
     log.error "syslog failed to emit", error: e, tag: tag, record: Yajl.dump(record)
   end
 end
-end
