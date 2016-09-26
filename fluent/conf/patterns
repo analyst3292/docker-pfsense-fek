@@ -6,10 +6,9 @@
 # Edited 19 Sep 2016 by FoxBoxsnet
 #
 # Usage: Use with following GROK match pattern
-## Fluent FORMAT : %{SYSLOGTIMESTAMP:date} %{WORD:prog}: %{LOG_DATA}%{IP_SPECIFIC_DATA}%{IP_DATA}
+## Fluent FORMAT : %{SYSLOGTIMESTAMP:date} %{WORD:prog}: %{LOG_DATA}%{IP_SPECIFIC_DATA%{IP_DATA}
 ## IPv4          : %{LOG_DATA}%{IP_SPECIFIC_DATA}%{IP_DATA}%{PROTOCOL_DATA}
 ## IPv6          : %{LOG_DATA}%{IP_SPECIFIC_DATA}%{IP_DATA}
-
 LOG_DATA (%{INT:rule}),(%{INT:sub_rule}),,(%{INT:tracker}),(%{WORD:iface}),(%{WORD:reason}),(%{WORD:action}),(%{WORD:rule_direction}),(%{INT:ip_ver}),
 IP_SPECIFIC_DATA (%{IPv4_SPECIFIC_DATA}|%{IPv6_SPECIFIC_DATA})
 IPv4_SPECIFIC_DATA (%{BASE16NUM:tos}),,(%{INT:ttl}),(%{INT:id}),(%{INT:offset}),(%{WORD:flags}),(%{INT:proto_id}),(%{WORD:proto}),
