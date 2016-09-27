@@ -7,7 +7,7 @@
 #
 # Usage: Use with following GROK match pattern
 ## Fluent FORMAT : %{SYSLOGTIMESTAMP:date} %{PROG}: %{LOG_DATA}%{IP_SPECIFIC_DATA}%{IP_DATA}
-				   %{SYSLOGTIMESTAMP:date} %{PROG}: %{PFSENSE}
+                   %{SYSLOGTIMESTAMP:date} %{PROG}: %{PFSENSE}
 ## IPv4          : %{LOG_DATA}%{IP_SPECIFIC_DATA}%{IP_DATA}%{PROTOCOL_DATA}
 ## IPv6          : %{LOG_DATA}%{IP_SPECIFIC_DATA}%{IP_DATA}
 
@@ -18,49 +18,48 @@ PFSENSE (%{FILTERLOG})
 PROG (?<prog>(filterlog|dhcpd|openvpn))
 
 
-## Firewall
+## Filter log
+    FILTERLOG (%{FILTER_LOG_DATA}%{FILTER_IP_SPECIFIC_DATA}%{FILTER_IP_DATA}%{FILTER_PROTOCOL_DATA})
+    FILTER_LOG_DATA (%{INT:rule}),(%{INT:sub_rule}),,(%{INT:tracker}),(%{WORD:iface}),(%{WORD:reason}),(%{WORD:action}),(%{WORD:rule_direction}),(%{INT:ip_ver}),
+    FILTER_IP_SPECIFIC_DATA (%{FILTER_IPv4_SPECIFIC_DATA}|%{FILTER_IPv6_SPECIFIC_DATA})
+    FILTER_IPv4_SPECIFIC_DATA (%{BASE16NUM:tos}),,(%{INT:ttl}),(%{INT:id}),(%{INT:offset}),(%{WORD:flags}),(%{INT:proto_id}),(%{WORD:proto}),
+    FILTER_IPv6_SPECIFIC_DATA (%{BASE16NUM:class}),(%{BASE16NUM:flow_label}),(%{INT:hop_limit}),(%{WORD:proto}),(%{INT:proto_id}),
 
-FILTERLOG (%{FW_LOG_DATA}%{FW_IP_SPECIFIC_DATA}%{FW_IP_DATA})
-FW_LOG_DATA (%{INT:rule}),(%{INT:sub_rule}),,(%{INT:tracker}),(%{WORD:iface}),(%{WORD:reason}),(%{WORD:action}),(%{WORD:rule_direction}),(%{INT:ip_ver}),
-FW_IP_SPECIFIC_DATA (%{FW_IPv4_SPECIFIC_DATA}|%{FW_IPv6_SPECIFIC_DATA})
-FW_IPv4_SPECIFIC_DATA (%{BASE16NUM:tos}),,(%{INT:ttl}),(%{INT:id}),(%{INT:offset}),(%{WORD:flags}),(%{INT:proto_id}),(%{WORD:proto}),
-FW_IPv6_SPECIFIC_DATA (%{BASE16NUM:class}),(%{BASE16NUM:flow_label}),(%{INT:hop_limit}),(%{WORD:proto}),(%{INT:proto_id}),
+    ### IP data
+        FILTER_IP_DATA (%{FILTER_IP_DATA_IPv4}|%{FILTER_IP_DATA_IPv6})
+        FILTER_IP_DATA_IPv4 (%{INT:length}),(%{IPV4:src_ip}),(%{IPV4:dest_ip}),
+        FILTER_IP_DATA_IPv6 (%{INT:length}),(%{IPV6:src_ip}),(%{IPV6:dest_ip}),
 
-### IP data
-FW_IP_DATA (%{FW_IP_DATA_IPv4}|%{FW_IP_DATA_IPv6})
-FW_IP_DATA_IPv4 (%{INT:length}),(%{IPV4:src_ip}),(%{IPV4:dest_ip}),(%{FW_PROTOCOL_DATA})
-FW_IP_DATA_IPv6 (%{INT:length}),(%{IPV6:src_ip}),(%{IPV6:dest_ip}),
+    ### Protocols
+        FILTER_PROTOCOL_DATA (%{FILTER_TCP_DATA}|%{FILTER_UDP_DATA}|%{FILTER_ICMP_DATA}|%{FILTER_PFSYNC_DATA}|%{FILTER_CARP_DATA})
 
-### Protocols
-FW_PROTOCOL_DATA (%{FW_TCP_DATA}|%{FW_UDP_DATA}|%{FW_ICMP_DATA}|%{FW_PFSYNC_DATA}|%{FW_CARP_DATA})
+    ### TCP
+        FILTER_TCP_DATA (%{INT:src_port}),(%{INT:dest_port}),(%{INT:data_length}),(%{WORD:tcp_flags}),(%{NOTSPACE:sequence_number}),(%{INT:ack_number}?),(%{INT:tcp_window}),(%{DATA:urg_data}),(%{DATA:tcp_options})
 
-### TCP
-FW_TCP_DATA (%{INT:src_port}),(%{INT:dest_port}),(%{INT:data_length}),(%{WORD:tcp_flags}),(%{NOTSPACE:sequence_number}),(%{INT:ack_number}?),(%{INT:tcp_window}),(%{DATA:urg_data}),(%{DATA:tcp_options})
+    ### UDP
+        FILTER_UDP_DATA (%{INT:src_port}),(%{INT:dest_port}),(%{INT:data_length})
 
-### UDP
-FW_UDP_DATA (%{INT:src_port}),(%{INT:dest_port}),(%{INT:data_length})
+    ### ICMP
+        FILTER_ICMP_DATA (%{FILTER_ICMP_TYPE}%{FILTER_ICMP_RESPONSE})
+        FILTER_PFSYNC_DATA (datalength=%{INT:data_length})
+        FILTER_ICMP_TYPE (?<icmp_type>(request|reply|unreachproto|unreachport|unreach|timeexceed|paramprob|redirect|maskreply|needfrag|tstamp|tstampreply)),
+        FILTER_ICMP_RESPONSE (%{FILTER_ICMP_ECHO_REQ_REPLY}|%{FILTER_ICMP_UNREACHPORT}| %{FILTER_ICMP_UNREACHPROTO}|%{FILTER_ICMP_UNREACHABLE}|%{FILTER_ICMP_NEED_FLAG}|%{FILTER_ICMP_TSTAMP}|%{FILTER_ICMP_TSTAMP_REPLY})
+        FILTER_ICMP_ECHO_REQ_REPLY (%{INT:icmp_echo_id}),(%{INT:icmp_echo_sequence})
+        FILTER_ICMP_UNREACHPORT (%{IP:icmp_unreachport_dest_ip}),(%{WORD:icmp_unreachport_protocol}),(%{INT:icmp_unreachport_port})
+        FILTER_ICMP_UNREACHPROTO (%{IP:icmp_unreach_dest_ip}),(%{WORD:icmp_unreachproto_protocol})
+        FILTER_ICMP_UNREACHABLE (%{GREEDYDATA:icmp_unreachable})
+        FILTER_ICMP_NEED_FLAG (%{IP:icmp_need_flag_ip}),(%{INT:icmp_need_flag_mtu})
+        FILTER_ICMP_TSTAMP (%{INT:icmp_tstamp_id}),(%{INT:icmp_tstamp_sequence})
+        FILTER_ICMP_TSTAMP_REPLY (%{INT:icmp_tstamp_reply_id}),(%{INT:icmp_tstamp_reply_sequence}),(%{INT:icmp_tstamp_reply_otime}),(%{INT:icmp_tstamp_reply_rtime}),(%{INT:icmp_tstamp_reply_ttime})
 
-### ICMP
-FW_ICMP_DATA (%{FW_ICMP_TYPE}%{FW_ICMP_RESPONSE})
-FW_PFSYNC_DATA (datalength=%{INT:data_length})
-FW_ICMP_TYPE (?<icmp_type>(request|reply|unreachproto|unreachport|unreach|timeexceed|paramprob|redirect|maskreply|needfrag|tstamp|tstampreply)),
-FW_ICMP_RESPONSE (%{FW_ICMP_ECHO_REQ_REPLY}|%{FW_ICMP_UNREACHPORT}| %{FW_ICMP_UNREACHPROTO}|%{FW_ICMP_UNREACHABLE}|%{FW_ICMP_NEED_FLAG}|%{FW_ICMP_TSTAMP}|%{FW_ICMP_TSTAMP_REPLY})
-FW_ICMP_ECHO_REQ_REPLY (%{INT:icmp_echo_id}),(%{INT:icmp_echo_sequence})
-FW_ICMP_UNREACHPORT (%{IP:icmp_unreachport_dest_ip}),(%{WORD:icmp_unreachport_protocol}),(%{INT:icmp_unreachport_port})
-FW_ICMP_UNREACHPROTO (%{IP:icmp_unreach_dest_ip}),(%{WORD:icmp_unreachproto_protocol})
-FW_ICMP_UNREACHABLE (%{GREEDYDATA:icmp_unreachable})
-FW_ICMP_NEED_FLAG (%{IP:icmp_need_flag_ip}),(%{INT:icmp_need_flag_mtu})
-FW_ICMP_TSTAMP (%{INT:icmp_tstamp_id}),(%{INT:icmp_tstamp_sequence})
-FW_ICMP_TSTAMP_REPLY (%{INT:icmp_tstamp_reply_id}),(%{INT:icmp_tstamp_reply_sequence}),(%{INT:icmp_tstamp_reply_otime}),(%{INT:icmp_tstamp_reply_rtime}),(%{INT:icmp_tstamp_reply_ttime})
-
-### CARP
-FW_CARP_DATA (%{WORD:carp_type}),(%{INT:carp_ttl}),(%{INT:carp_vhid}),(%{INT:carp_version}),(%{INT:carp_advbase}),(%{INT:carp_advskew})
+    ### CARP
+        FILTER_CARP_DATA (%{WORD:carp_type}),(%{INT:carp_ttl}),(%{INT:carp_vhid}),(%{INT:carp_version}),(%{INT:carp_advbase}),(%{INT:carp_advskew})
 
 ## dhcpd
-DHCPD (%{DHCPDISCOVER}|%{DHCPOFFER}|%{DHCPREQUEST}|%{DHCPACK}|%{DHCPINFORM}|%{DHCPRELEASE})
-DHCPDISCOVER %{WORD:dhcp_action} from %{COMMONMAC:dhcp_client_mac}%{SPACE}(\(%{GREEDYDATA:dhcp_client_hostname}\))? via (?<dhcp_client_vlan>[0-9a-z_]*)(: %{GREEDYDATA:dhcp_load_balance})?
-DHCPOFFER %{WORD:dhcp_action} on %{IPV4:dhcp_client_ip} to %{COMMONMAC:dhcp_client_mac}%{SPACE}(\(%{GREEDYDATA:dhcp_client_hostname}\))? via (?<dhcp_client_vlan>[0-9a-z_]*)
-DHCPREQUEST %{WORD:dhcp_action} for %{IPV4:dhcp_client_ip}%{SPACE}(\(%{IPV4:dhcp_ip_unknown}\))? from %{COMMONMAC:dhcp_client_mac}%{SPACE}(\(%{GREEDYDATA:dhcp_client_hostname}\))? via (?<dhcp_client_vlan>[0-9a-z_]*)(: %{GREEDYDATA:dhcp_request_message})?
-DHCPACK %{WORD:dhcp_action} on %{IPV4:dhcp_client_ip} to %{COMMONMAC:dhcp_client_mac}%{SPACE}(\(%{GREEDYDATA:dhcp_client_hostname}\))? via (?<dhcp_client_vlan>[0-9a-z_]*)
-DHCPINFORM %{WORD:dhcp_action} from %{IPV4:dhcp_client_ip} via %(?<dhcp_client_vlan>[0-9a-z_]*)
-DHCPRELEASE %{WORD:dhcp_action} of %{IPV4:dhcp_client_ip} from %{COMMONMAC:dhcp_client_mac}%{SPACE}(\(%{GREEDYDATA:dhcp_client_hostname}\))? via (?<dhcp_client_vlan>[0-9a-z_]*) %{GREEDYDATA:dhcp_release_message}
+    DHCPD (%{DHCPDISCOVER}|%{DHCPOFFER}|%{DHCPREQUEST}|%{DHCPACK}|%{DHCPINFORM}|%{DHCPRELEASE})
+    DHCPDISCOVER %{WORD:dhcp_action} from %{COMMONMAC:dhcp_client_mac}%{SPACE}(\(%{GREEDYDATA:dhcp_client_hostname}\))? via (?<dhcp_client_vlan>[0-9a-z_]*)(: %{GREEDYDATA:dhcp_load_balance})?
+    DHCPOFFER %{WORD:dhcp_action} on %{IPV4:dhcp_client_ip} to %{COMMONMAC:dhcp_client_mac}%{SPACE}(\(%{GREEDYDATA:dhcp_client_hostname}\))? via (?<dhcp_client_vlan>[0-9a-z_]*)
+    DHCPREQUEST %{WORD:dhcp_action} for %{IPV4:dhcp_client_ip}%{SPACE}(\(%{IPV4:dhcp_ip_unknown}\))? from %{COMMONMAC:dhcp_client_mac}%{SPACE}(\(%{GREEDYDATA:dhcp_client_hostname}\))? via (?<dhcp_client_vlan>[0-9a-z_]*)(: %{GREEDYDATA:dhcp_request_message})?
+    DHCPACK %{WORD:dhcp_action} on %{IPV4:dhcp_client_ip} to %{COMMONMAC:dhcp_client_mac}%{SPACE}(\(%{GREEDYDATA:dhcp_client_hostname}\))? via (?<dhcp_client_vlan>[0-9a-z_]*)
+    DHCPINFORM %{WORD:dhcp_action} from %{IPV4:dhcp_client_ip} via %(?<dhcp_client_vlan>[0-9a-z_]*)
+    DHCPRELEASE %{WORD:dhcp_action} of %{IPV4:dhcp_client_ip} from %{COMMONMAC:dhcp_client_mac}%{SPACE}(\(%{GREEDYDATA:dhcp_client_hostname}\))? via (?<dhcp_client_vlan>[0-9a-z_]*) %{GREEDYDATA:dhcp_release_message}
