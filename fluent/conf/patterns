@@ -19,41 +19,41 @@ PROG (?<prog>(filterlog|dhcpd|openvpn))
 
 
 ## Filter log
-    FILTERLOG (%{FILTER_LOG_DATA}%{FILTER_IP_SPECIFIC_DATA}%{FILTER_IP_DATA}%{FILTER_PROTOCOL_DATA})
-    FILTER_LOG_DATA (%{INT:rule}),(%{INT:sub_rule}),,(%{INT:tracker}),(%{WORD:iface}),(%{WORD:reason}),(%{WORD:action}),(%{WORD:rule_direction}),(%{INT:ip_ver}),
-    FILTER_IP_SPECIFIC_DATA (%{FILTER_IPv4_SPECIFIC_DATA}|%{FILTER_IPv6_SPECIFIC_DATA})
-    FILTER_IPv4_SPECIFIC_DATA (%{BASE16NUM:tos}),,(%{INT:ttl}),(%{INT:id}),(%{INT:offset}),(%{WORD:flags}),(%{INT:proto_id}),(%{WORD:proto}),
-    FILTER_IPv6_SPECIFIC_DATA (%{BASE16NUM:class}),(%{BASE16NUM:flow_label}),(%{INT:hop_limit}),(%{WORD:proto}),(%{INT:proto_id}),
+FILTERLOG (%{FILTER_LOG_DATA}%{FILTER_IP_SPECIFIC_DATA}%{FILTER_IP_DATA}%{FILTER_PROTOCOL_DATA})
+FILTER_LOG_DATA (%{INT:rule}),(%{INT:sub_rule}),,(%{INT:tracker}),(%{WORD:iface}),(%{WORD:reason}),(%{WORD:action}),(%{WORD:rule_direction}),(%{INT:ip_ver}),
+FILTER_IP_SPECIFIC_DATA (%{FILTER_IPv4_SPECIFIC_DATA}|%{FILTER_IPv6_SPECIFIC_DATA})
+FILTER_IPv4_SPECIFIC_DATA (%{BASE16NUM:tos}),,(%{INT:ttl}),(%{INT:id}),(%{INT:offset}),(%{WORD:flags}),(%{INT:proto_id}),(%{WORD:proto}),
+FILTER_IPv6_SPECIFIC_DATA (%{BASE16NUM:class}),(%{BASE16NUM:flow_label}),(%{INT:hop_limit}),(%{WORD:proto}),(%{INT:proto_id}),
 
-    ### IP data
-        FILTER_IP_DATA (%{FILTER_IP_DATA_IPv4}|%{FILTER_IP_DATA_IPv6})
-        FILTER_IP_DATA_IPv4 (%{INT:length}),(%{IPV4:src_ip}),(%{IPV4:dest_ip}),
-        FILTER_IP_DATA_IPv6 (%{INT:length}),(%{IPV6:src_ip}),(%{IPV6:dest_ip}),
+### IP data
+FILTER_IP_DATA (%{FILTER_IP_DATA_IPv4}|%{FILTER_IP_DATA_IPv6})
+FILTER_IP_DATA_IPv4 (%{INT:length}),(%{IPV4:src_ip}),(%{IPV4:dest_ip}),
+FILTER_IP_DATA_IPv6 (%{INT:length}),(%{IPV6:src_ip}),(%{IPV6:dest_ip}),
 
-    ### Protocols
-        FILTER_PROTOCOL_DATA (%{FILTER_TCP_DATA}|%{FILTER_UDP_DATA}|%{FILTER_ICMP_DATA}|%{FILTER_PFSYNC_DATA}|%{FILTER_CARP_DATA})
+### Protocols
+FILTER_PROTOCOL_DATA (%{FILTER_TCP_DATA}|%{FILTER_UDP_DATA}|%{FILTER_ICMP_DATA}|%{FILTER_PFSYNC_DATA}|%{FILTER_CARP_DATA})
 
-    ### TCP
-        FILTER_TCP_DATA (%{INT:src_port}),(%{INT:dest_port}),(%{INT:data_length}),(%{WORD:tcp_flags}),(%{NOTSPACE:sequence_number}),(%{INT:ack_number}?),(%{INT:tcp_window}),(%{DATA:urg_data}),(%{DATA:tcp_options})
+### TCP
+FILTER_TCP_DATA (%{INT:src_port}),(%{INT:dest_port}),(%{INT:data_length}),(%{WORD:tcp_flags}),(%{NOTSPACE:sequence_number}),(%{INT:ack_number}?),(%{INT:tcp_window}),(%{DATA:urg_data}),(%{DATA:tcp_options})
 
-    ### UDP
-        FILTER_UDP_DATA (%{INT:src_port}),(%{INT:dest_port}),(%{INT:data_length})
+### UDP
+FILTER_UDP_DATA (%{INT:src_port}),(%{INT:dest_port}),(%{INT:data_length})
 
-    ### ICMP
-        FILTER_ICMP_DATA (%{FILTER_ICMP_TYPE}%{FILTER_ICMP_RESPONSE})
-        FILTER_PFSYNC_DATA (datalength=%{INT:data_length})
-        FILTER_ICMP_TYPE (?<icmp_type>(request|reply|unreachproto|unreachport|unreach|timeexceed|paramprob|redirect|maskreply|needfrag|tstamp|tstampreply)),
-        FILTER_ICMP_RESPONSE (%{FILTER_ICMP_ECHO_REQ_REPLY}|%{FILTER_ICMP_UNREACHPORT}| %{FILTER_ICMP_UNREACHPROTO}|%{FILTER_ICMP_UNREACHABLE}|%{FILTER_ICMP_NEED_FLAG}|%{FILTER_ICMP_TSTAMP}|%{FILTER_ICMP_TSTAMP_REPLY})
-        FILTER_ICMP_ECHO_REQ_REPLY (%{INT:icmp_echo_id}),(%{INT:icmp_echo_sequence})
-        FILTER_ICMP_UNREACHPORT (%{IP:icmp_unreachport_dest_ip}),(%{WORD:icmp_unreachport_protocol}),(%{INT:icmp_unreachport_port})
-        FILTER_ICMP_UNREACHPROTO (%{IP:icmp_unreach_dest_ip}),(%{WORD:icmp_unreachproto_protocol})
-        FILTER_ICMP_UNREACHABLE (%{GREEDYDATA:icmp_unreachable})
-        FILTER_ICMP_NEED_FLAG (%{IP:icmp_need_flag_ip}),(%{INT:icmp_need_flag_mtu})
-        FILTER_ICMP_TSTAMP (%{INT:icmp_tstamp_id}),(%{INT:icmp_tstamp_sequence})
-        FILTER_ICMP_TSTAMP_REPLY (%{INT:icmp_tstamp_reply_id}),(%{INT:icmp_tstamp_reply_sequence}),(%{INT:icmp_tstamp_reply_otime}),(%{INT:icmp_tstamp_reply_rtime}),(%{INT:icmp_tstamp_reply_ttime})
+### ICMP
+FILTER_ICMP_DATA (%{FILTER_ICMP_TYPE}%{FILTER_ICMP_RESPONSE})
+FILTER_PFSYNC_DATA (datalength=%{INT:data_length})
+FILTER_ICMP_TYPE (?<icmp_type>(request|reply|unreachproto|unreachport|unreach|timeexceed|paramprob|redirect|maskreply|needfrag|tstamp|tstampreply)),
+FILTER_ICMP_RESPONSE (%{FILTER_ICMP_ECHO_REQ_REPLY}|%{FILTER_ICMP_UNREACHPORT}| %{FILTER_ICMP_UNREACHPROTO}|%{FILTER_ICMP_UNREACHABLE}|%{FILTER_ICMP_NEED_FLAG}|%{FILTER_ICMP_TSTAMP}|%{FILTER_ICMP_TSTAMP_REPLY})
+FILTER_ICMP_ECHO_REQ_REPLY (%{INT:icmp_echo_id}),(%{INT:icmp_echo_sequence})
+FILTER_ICMP_UNREACHPORT (%{IP:icmp_unreachport_dest_ip}),(%{WORD:icmp_unreachport_protocol}),(%{INT:icmp_unreachport_port})
+FILTER_ICMP_UNREACHPROTO (%{IP:icmp_unreach_dest_ip}),(%{WORD:icmp_unreachproto_protocol})
+FILTER_ICMP_UNREACHABLE (%{GREEDYDATA:icmp_unreachable})
+FILTER_ICMP_NEED_FLAG (%{IP:icmp_need_flag_ip}),(%{INT:icmp_need_flag_mtu})
+FILTER_ICMP_TSTAMP (%{INT:icmp_tstamp_id}),(%{INT:icmp_tstamp_sequence})
+FILTER_ICMP_TSTAMP_REPLY (%{INT:icmp_tstamp_reply_id}),(%{INT:icmp_tstamp_reply_sequence}),(%{INT:icmp_tstamp_reply_otime}),(%{INT:icmp_tstamp_reply_rtime}),(%{INT:icmp_tstamp_reply_ttime})
 
-    ### CARP
-        FILTER_CARP_DATA (%{WORD:carp_type}),(%{INT:carp_ttl}),(%{INT:carp_vhid}),(%{INT:carp_version}),(%{INT:carp_advbase}),(%{INT:carp_advskew})
+### CARP
+FILTER_CARP_DATA (%{WORD:carp_type}),(%{INT:carp_ttl}),(%{INT:carp_vhid}),(%{INT:carp_version}),(%{INT:carp_advbase}),(%{INT:carp_advskew})
 
 ## dhcpd
     DHCPD (%{DHCPDISCOVER}|%{DHCPOFFER}|%{DHCPREQUEST}|%{DHCPACK}|%{DHCPINFORM}|%{DHCPRELEASE})
