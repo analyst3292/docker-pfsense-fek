@@ -14,6 +14,6 @@ RUN \
 EXPOSE 5514/udp
 
 COPY conf/ /fluentd/etc/
-COPY plugins/ /fluentd/plugins
+
 WORKDIR /home/fluent
 CMD fluentd -c /fluentd/etc/fluent.conf -p /fluentd/plugins -vv
