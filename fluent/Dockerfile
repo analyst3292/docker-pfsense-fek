@@ -10,7 +10,7 @@ RUN \
 	&& gem install fluent-plugin-geoip-filter \
 	&& gem install fluent-plugin-grok-parser \
 	&& gem install fluent-plugin-ignore-filter \
-	&& gem install fluent-plugin-resolv
+	&& gem install fluent-plugin-filter-geoip
 
 EXPOSE 5514/udp
 
