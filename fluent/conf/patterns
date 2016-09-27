@@ -12,7 +12,7 @@
 ## IPv6          : %{LOG_DATA}%{IP_SPECIFIC_DATA}%{IP_DATA}
 
 # logformat
-PFSENSE (%{FW_LOG_DATA}%{FW_IP_SPECIFIC_DATA}%{FW_IP_DATA})
+PFSENSE (%{FILTERLOG})
 
 #Programs
 PROG (?<prog>(filterlog|dhcpd|openvpn))
@@ -20,7 +20,7 @@ PROG (?<prog>(filterlog|dhcpd|openvpn))
 
 ## Firewall
 
-FILTERLOG (%{SYSLOGTIMESTAMP:date} %{WORD:prog}: %{FW_LOG_DATA}%{FW_IP_SPECIFIC_DATA}%{FW_IP_DATA}%{PROTOCOL_DATA})
+FILTERLOG (%{FW_LOG_DATA}%{FW_IP_SPECIFIC_DATA}%{FW_IP_DATA})
 FW_LOG_DATA (%{INT:rule}),(%{INT:sub_rule}),,(%{INT:tracker}),(%{WORD:iface}),(%{WORD:reason}),(%{WORD:action}),(%{WORD:rule_direction}),(%{INT:ip_ver}),
 FW_IP_SPECIFIC_DATA (%{FW_IPv4_SPECIFIC_DATA}|%{FW_IPv6_SPECIFIC_DATA})
 FW_IPv4_SPECIFIC_DATA (%{BASE16NUM:tos}),,(%{INT:ttl}),(%{INT:id}),(%{INT:offset}),(%{WORD:flags}),(%{INT:proto_id}),(%{WORD:proto}),
