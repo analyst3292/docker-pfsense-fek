@@ -25,8 +25,8 @@ FILTER_IPv6_SPECIFIC_DATA (%{BASE16NUM:class}),(%{BASE16NUM:flow_label}),(%{INT:
 
 ### IP data
 FILTER_IP_DATA (%{FILTER_IP_DATA_IPv4}|%{FILTER_IP_DATA_IPv6})
-FILTER_IP_DATA_IPv4 (%{INT:length}),(%{IPV4:src_ip}),(%{IPV4:dest_ip})
-FILTER_IP_DATA_IPv6 (%{INT:length}),(%{IPV6:src_ip}),(%{IPV6:dest_ip})
+FILTER_IP_DATA_IPv4 (%{INT:length}),(%{IPV4:src_ip}),(%{IPV4:dest_ip}),
+FILTER_IP_DATA_IPv6 (%{INT:length}),(%{IPV6:src_ip}),(%{IPV6:dest_ip}),
 
 ### Protocols
 FILTER_PROTOCOL_DATA (%{FILTER_TCP_DATA}|%{FILTER_UDP_DATA}|%{FILTER_ICMP_DATA}|%{FILTER_PFSYNC_DATA}|%{FILTER_CARP_DATA})
