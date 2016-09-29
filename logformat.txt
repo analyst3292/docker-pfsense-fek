@@ -1,0 +1,50 @@
+Sep 26 23:17:41 dhcpd: DHCPREQUEST for 192.168.11.1 from 00:00:00:00:00:00 via em2
+Sep 26 23:17:41 dhcpd: DHCPACK on 192.168.11.1 to 00:00:00:00:00:00 via em2
+Sep 27 00:02:12 dhcpd: Wrote 9 leases to leases file.
+
+
+Sep 29 12:16:06 openvpn[60316]: 192.168.11.1:54411 Connection reset, restarting [0]
+Sep 29 12:15:32 openvpn[60316]: user1/192.168.11.1:7077 Connection reset, restarting [-1]
+Sep 29 12:15:55 openvpn[60316]: user1/192.168.11.1:5427 Connection reset, restarting [-1]
+
+
+Sep 29 12:15:35 openvpn[60316]: TCP connection established with [AF_INET]192.168.11.1:54270
+Sep 29 12:16:02 openvpn[60316]: TCP connection established with [AF_INET]192.168.11.1:54411
+
+Sep 29 12:15:37 openvpn: user 'user1' authenticated
+Sep 29 12:15:37 openvpn[60316]: 192.168.11.1:54270 [user1] Peer Connection Initiated with [AF_INET]192.168.11.1:54270
+Sep 29 12:15:39 openvpn[60316]: user1/192.168.11.1:54270 send_push_reply(): safe_cap=940
+
+Sep 29 12:16:04 openvpn[60316]: 192.168.11.1:54411 TLS Auth Error: Auth Username/Password verification failed for peer
+Sep 29 12:16:04 openvpn: Username does not match certificate common name (admin != user1), access denied.
+Sep 29 12:16:04 openvpn[60316]: 192.168.11.1:54411 WARNING: Failed running command (--auth-user-pass-verify): external program exited with error status: 1
+
+
+
+
+
+
+
+Sep 27 03:30:53 filterlog: 5,16777216,,1000000103,em0,match,block,in,4,0x2,0,46,8704,0,none,6,tcp,44,87.97.174.102,192.168.11.1,16774,23,0,S,1995451437,,29405,,mss
+Sep 27 06:04:06 filterlog: 5,16777216,,1000000103,em0,match,block,in,4,0x2,0,112,20010,0,DF,6,tcp,52,103.207.36.253,192.168.11.1,49984,22,0,SEC,1742028576,,8192,,mss;nop;wscale;nop;nop;sackOK
+Sep 27 06:31:54 filterlog: 5,16777216,,1000000103,em0,match,block,in,4,0x2,0,113,11517,0,DF,6,tcp,52,123.31.34.137,192.168.11.1,60052,22,0,SEC,4173833187,,8192,,mss;nop;wscale;nop;nop;sackOK
+Sep 27 07:52:53 filterlog: 5,16777216,,1000000103,em0,match,block,in,4,0x3,CE,46,26015,0,none,6,tcp,44,152.170.68.89,192.168.11.1,46942,23,0,S,1995451437,,25867,,mss
+Sep 27 07:53:40 filterlog: 5,16777216,,1000000103,em0,match,block,in,4,0x3,CE,46,26015,0,none,6,tcp,44,152.170.68.89,192.168.11.1,46942,23,0,S,1995451437,,25867,,mss
+Sep 27 07:54:11 filterlog: 5,16777216,,1000000103,em0,match,block,in,4,0x3,CE,46,26015,0,none,6,tcp,44,152.170.68.89,192.168.11.1,46942,23,0,S,1995451437,,25867,,mss
+Sep 27 08:19:57 filterlog: 5,16777216,,1000000103,em0,match,block,in,4,0x3,CE,46,52780,0,none,6,tcp,44,181.165.124.76,192.168.11.1,53987,23,0,S,1995451437,,25815,,mss
+Sep 27 08:19:58 filterlog: 5,16777216,,1000000103,em0,match,block,in,4,0x3,CE,46,52780,0,none,6,tcp,44,181.165.124.76,192.168.11.1,53987,23,0,S,1995451437,,25815,,mss
+Sep 27 10:04:25 filterlog: 5,16777216,,1000000103,em0,match,block,in,4,0x17,CE,47,7039,0,none,6,tcp,44,190.193.69.39,192.168.11.1,3158,23,0,S,1995451437,,14950,,mss
+
+Sep 27 10:27:46 sshlockout[46517]: sshlockout/webConfigurator v3.0 starting up
+
+
+Sep 27 10:27:46 php-fpm: /index.php: Successful login for user 'admin' from: 192.168.11.1
+Sep 29 14:00:15 php-fpm[50070]: /index.php: User logged out for user 'admin' from: 192.168.11.1
+Sep 27 10:27:46 php-fpm: /status_logs_settings.php: webConfigurator authentication error for 'admin' from 192.168.11.1
+
+Sep 28 23:19:12 hostname nginx: 192.168.11.1 - - [28/Sep/2016:23:19:12 +0900] "POST /widgets/widgets/gateways.widget.php HTTP/1.1" 200 200 "http://192.168.11.251/" "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/53.0.2785.116 Safari/537.36 Kinza/3.4.0"
+Sep 28 23:19:17 hostname nginx: 192.168.11.1 - - [28/Sep/2016:23:19:17 +0900] "GET /ifstats.php?if=em0 HTTP/1.1" 200 66 "http://192.168.11.251/graph.php?ifnum=wan&ifname=WAN&timeint=10&initdelay=2" "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/53.0.2785.116 Safari/537.36 Kinza/3.4.0"
+
+
+
+Sep 29 00:00:00 /usr/sbin/cron[91919]: (root) CMD (/usr/bin/nice -n20 /usr/local/sbin/expiretable -v -t 3600 virusprot)
