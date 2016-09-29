@@ -7,16 +7,15 @@
 #
 # Usage: Use with following GROK match pattern
 ## Fluent FORMAT : %{SYSLOGTIMESTAMP:date} %{SYSLOGPROG}: %{PFSENSE}
-## IPv4          : %{SYSLOGTIMESTAMP:date} %{SYSLOGPROG}: %{PFSENSE}
-## IPv6          : %{SYSLOGTIMESTAMP:date} %{SYSLOGPROG}: %{PFSENSE}
+
 
 # logformat
-PFSENSE (%{FILTER}|%{DHCPD}|%{PHP-FPM})
+PFSENSE (%{FILTER}|%{DHCPD}|%{PHP-FPM}|%{OPENVPN})
 
 FILTER (%{FILTER_LOG_DATA}%{FILTER_IP_SPECIFIC_DATA}%{FILTER_IP_DATA}%{FILTER_PROTOCOL_DATA}|%{GREEDYDATA:message})
 DHCPD (%{DHCPD_DHCPDISCOVER}|%{DHCPD_DHCPOFFER}|%{DHCPD_DHCPREQUEST}|%{DHCPD_DHCPACK}|%{DHCPD_DHCPINFORM}|%{DHCPD_DHCPRELEASE}|%{GREEDYDATA:message})
 PHP-FPM (%{PHP-FPM_LOGIN}|%{PHP-FPM_LOGOUT}|%{PHP-FPM_FAILD}|%{GREEDYDATA:message})
-
+OPENVPN (%{OPENVPN_USER_AUTH}|%{OPENVPN_PEER_CONN}|%{OPENVPN_USER_SEND}|%{OPENVPN_CONN_RESET}|%{OPENVPN_CONN}|%{GREEDYDATA:message})
 
 
 
@@ -27,9 +26,7 @@ FILTER_IPv4_SPECIFIC_DATA (%{BASE16NUM:tos}),,(%{INT:ttl}),(%{INT:id}),(%{INT:of
 FILTER_IPv6_SPECIFIC_DATA (%{BASE16NUM:class}),(%{BASE16NUM:flow_label}),(%{INT:hop_limit}),(%{WORD:proto}),(%{INT:proto_id}),
 
 ### IP data
-FILTER_IP_DATA (%{FILTER_IP_DATA_IPv4}|%{FILTER_IP_DATA_IPv6})
-FILTER_IP_DATA_IPv4 (%{INT:length}),(%{IPV4:src_ip}),(%{IPV4:dest_ip})
-FILTER_IP_DATA_IPv6 (%{INT:length}),(%{IPV6:src_ip}),(%{IPV6:dest_ip})
+FILTER_IP_DATA (%{INT:length}),(%{IP:src_ip}),(%{IP:dest_ip})
 
 ### Protocols
 FILTER_PROTOCOL_DATA (,%{FILTER_TCP_DATA}|,%{FILTER_UDP_DATA}|,%{FILTER_ICMP_DATA}|,%{FILTER_PFSYNC_DATA}|,%{FILTER_CARP_DATA}|,)
@@ -66,15 +63,11 @@ DHCPD_DHCPINFORM %{WORD:dhcp_action} from %{IPV4:dhcp_client_ip} via %(?<dhcp_cl
 DHCPD_DHCPRELEASE %{WORD:dhcp_action} of %{IPV4:dhcp_client_ip} from %{COMMONMAC:dhcp_client_mac}%{SPACE}(\(%{GREEDYDATA:dhcp_client_hostname}\))? via (?<dhcp_client_vlan>[0-9a-z_]*) %{GREEDYDATA:dhcp_release_message}
 
 ## OpenVPN
-OPENVPN_USER_AUTH user '%{WORD:pf_user}' 
-
-Sep 26 23:23:51 openvpn: user 'admin' authenticated
-Sep 26 23:37:50 openvpn[60316]: admin/192.168.0.111:11111 Connection reset, restarting [-1]
-Sep 27 09:32:10 openvpn[60316]: TCP connection established with [AF_INET]118.21.39.38:3992
-Sep 27 09:32:11 openvpn[60316]: 118.21.39.38:3992 [admin] Peer Connection Initiated with [AF_INET]118.21.39.38:3992
-Sep 27 09:32:11 openvpn: user 'admin' authenticated
-Sep 27 09:32:14 openvpn[60316]: admin/118.21.39.38:3992 send_push_reply(): safe_cap=940
-
+OPENVPN_USER_AUTH user '%{USERNAME:WORD:pf_user}' authenticated
+OPENVPN_PEER_CONN %{IP:src_ip}:%{INT:src_port} [%{USERNAME:pf_user}] Peer Connection Initiated with [%{WORD}]%{IP:src_ip}:%{INT:src_port}
+OPENVPN_USER_SEND %{USERNAME:pf_user}/%{IP:src_ip}:%{INT:src_port} send_push_reply(): safe_cap=%{INT}
+OPENVPN_CONN_RESET ${IP:src_ip}:%{INT:src_port} Connection reset, restarting [%{WORD:openvpn_conn_cnt}]
+OPENVPN_CONN %{WORD:proto} connection established with [%{WORD}]${IP:src_ip}:%{INT:src_port}
 
 ## php-fpm
 LOGOUT \b\w+\s\w+\b

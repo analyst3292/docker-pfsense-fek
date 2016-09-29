@@ -3,25 +3,12 @@ Sep 26 23:17:41 dhcpd: DHCPACK on 192.168.11.1 to 00:00:00:00:00:00 via em2
 Sep 27 00:02:12 dhcpd: Wrote 9 leases to leases file.
 
 
-Sep 29 12:16:06 openvpn[60316]: 192.168.11.1:54411 Connection reset, restarting [0]
-Sep 29 12:15:32 openvpn[60316]: user1/192.168.11.1:7077 Connection reset, restarting [-1]
-Sep 29 12:15:55 openvpn[60316]: user1/192.168.11.1:5427 Connection reset, restarting [-1]
-
-
-Sep 29 12:15:35 openvpn[60316]: TCP connection established with [AF_INET]192.168.11.1:54270
-Sep 29 12:16:02 openvpn[60316]: TCP connection established with [AF_INET]192.168.11.1:54411
-
 Sep 29 12:15:37 openvpn: user 'user1' authenticated
 Sep 29 12:15:37 openvpn[60316]: 192.168.11.1:54270 [user1] Peer Connection Initiated with [AF_INET]192.168.11.1:54270
 Sep 29 12:15:39 openvpn[60316]: user1/192.168.11.1:54270 send_push_reply(): safe_cap=940
-
-Sep 29 12:16:04 openvpn[60316]: 192.168.11.1:54411 TLS Auth Error: Auth Username/Password verification failed for peer
-Sep 29 12:16:04 openvpn: Username does not match certificate common name (admin != user1), access denied.
-Sep 29 12:16:04 openvpn[60316]: 192.168.11.1:54411 WARNING: Failed running command (--auth-user-pass-verify): external program exited with error status: 1
-
-
-
-
+Sep 29 12:16:06 openvpn[60316]: 192.168.11.1:54411 Connection reset, restarting [0]
+Sep 29 12:15:55 openvpn[60316]: user1/192.168.11.1:5427 Connection reset, restarting [-1]
+Sep 29 12:16:02 openvpn[60316]: TCP connection established with [AF_INET]192.168.11.1:54411
 
 
 
