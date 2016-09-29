@@ -7,14 +7,18 @@
 #
 # Usage: Use with following GROK match pattern
 ## Fluent FORMAT : %{SYSLOGTIMESTAMP:date} %{SYSLOGPROG}: %{PFSENSE}
-
+## Fluent FORMAT : %{PFSENSE_SYSLOG_PATTERN}
 
 # logformat
-PFSENSE (%{FILTER}|%{DHCPD}|%{PHP-FPM}|%{OPENVPN}|%{GREEDYDATA:message})
+PFSENSE_SYSLOG_PATTERN (%{PFSENSE_PT1}|%{PFSENSE_PT2})
+PFSENSE_PT1 %{SYSLOGTIMESTAMP:date} %{SYSLOGPROG}: %{PFSENSE}
+PFSENSE_PT2 %{SYSLOGTIMESTAMP:date} (%{NGINX}|%{GREEDYDATA:message})
+PFSENSE (%{FILTER}|%{DHCPD}|%{PHP_FPM}|%{OPENVPN}|%{GREEDYDATA:message})
+
 
 FILTER (%{FILTER_LOG_DATA}%{FILTER_IP_SPECIFIC_DATA}%{FILTER_IP_DATA}%{FILTER_PROTOCOL_DATA})
 DHCPD (%{DHCPD_DHCPDISCOVER}|%{DHCPD_DHCPOFFER}|%{DHCPD_DHCPREQUEST}|%{DHCPD_DHCPACK}|%{DHCPD_DHCPINFORM}|%{DHCPD_DHCPRELEASE})
-PHP-FPM (%{PHP-FPM_LOGIN}|%{PHP-FPM_LOGOUT}|%{PHP-FPM_FAILD})
+PHP_FPM (%{PHP_FPM_LOGIN}|&{PHP_FPM_LOGOUT}|%{PHP_FPMM_FAILD})
 OPENVPN (%{OPENVPN_USER_AUTH}|%{OPENVPN_PEER_CONN}|%{OPENVPN_USER_SEND}|%{OPENVPN_CONN_RESET}|%{OPENVPN_CONN})
 
 ## Filter log
@@ -62,22 +66,16 @@ DHCPD_DHCPRELEASE %{WORD:dhcp_action} of %{IPV4:dhcp_client_ip} from %{COMMONMAC
 
 ## OpenVPN
 OPENVPN_USER_AUTH user '%{USERNAME:pf_user}' authenticated
-# user 'admin' authenticated
 OPENVPN_PEER_CONN %{IP:src_ip}:%{INT:src_port} \[%{USERNAME:pf_user}\] Peer Connection Initiated with \[AF_INET\]%{IP:src_ip}:%{INT:src_port}
-#                 192.168.11.1:54270 [user1] Peer Connection Initiated with [AF_INET]192.168.11.1:54270
-
 OPENVPN_USER_SEND %{USERNAME:pf_user}/%{IP:src_ip}:%{INT:src_port} send_push_reply\(\): safe_cap=%{WORD:openvpn_safe_cap}
-#                 user1/192.168.11.1:54270 send_push_reply(): safe_cap=940
-
 OPENVPN_CONN_RESET %{USERNAME:pf_user}/%{IP:src_ip}:%{INT:src_port} Connection reset, restarting \[%{INT:openvpn_conn_cnt}\]
-#                  redadmin/192.168.11.1:14478 Connection reset, restarting [-1]
-
 OPENVPN_CONN %{WORD} connection established with \[%{WORD}\]%{IP:src_ip}:%{INT:src_port}
-#            TCP connection established with [AF_INET]192.168.11.1:14682
 
 
 ## php-fpm
-LOGOUT \b\w+\s\w+\b
-PHP-FPM_LOGIN %{URIPATH:php-fpm_url}: Successful %{WORD:php-fpm_status} for user '%{WORD:pf_user}' from: %{IP:src_ip}
-PHP-FPM_LOGOUT %{URIPATH:php-fpm_url}: User %{LOGOUT:php-fpm_status} for user '%{WORD:pf_user}' from: %{IP:src_ip}
-PHP-FPM_FAILD %{URIPATH:php-fpm_url}: webConfigurator authentication %{WORD:php-fpm_status} for '%{WORD:pf_user}' from: %{IP:src_ip}
+PHP_FPM_LOGIN %{URIPATH:php-fpm_url}: Successful %{WORD:php-fpm_status} for user '%{WORD:pf_user}' from: %{IP:src_ip}
+PHP_FPM_LOGOUT %{URIPATH:php-fpm_url}: User %{WORD:php-fpm_status} out for user '%{WORD:pf_user}' from: %{IP:src_ip}
+PHP_FPMM_FAILD %{URIPATH:php-fpm_url}: webConfigurator authentication %{WORD:php-fpm_status} for '%{WORD:pf_user}' from %{IP:src_ip}
+
+# nginx
+NGINX %{IPORHOST:host} %{SYSLOGPROG}: %{IP:src_ip} -(%{WORD:php-fpm-remote-user}|%{SPACE})- \[%{HTTPDATE:timestamp}\] "%{WORD:nginx-status} %{URIPATH:nginx-path} HTTP/%{NUMBER:nginx-httpver}" %{INT:nginx-statuscode} %{INT:nginx-length} "%{URI:referrer}" "%{GREEDYDATA:nginx-user_agent}

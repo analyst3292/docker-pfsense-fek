@@ -30,8 +30,9 @@ Sep 29 14:00:15 php-fpm[50070]: /index.php: User logged out for user 'admin' fro
 Sep 27 10:27:46 php-fpm: /status_logs_settings.php: webConfigurator authentication error for 'admin' from 192.168.11.1
 
 Sep 28 23:19:12 hostname nginx: 192.168.11.1 - - [28/Sep/2016:23:19:12 +0900] "POST /widgets/widgets/gateways.widget.php HTTP/1.1" 200 200 "http://192.168.11.251/" "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/53.0.2785.116 Safari/537.36 Kinza/3.4.0"
-Sep 28 23:19:17 hostname nginx: 192.168.11.1 - - [28/Sep/2016:23:19:17 +0900] "GET /ifstats.php?if=em0 HTTP/1.1" 200 66 "http://192.168.11.251/graph.php?ifnum=wan&ifname=WAN&timeint=10&initdelay=2" "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/53.0.2785.116 Safari/537.36 Kinza/3.4.0"
 
 
 
-Sep 29 00:00:00 /usr/sbin/cron[91919]: (root) CMD (/usr/bin/nice -n20 /usr/local/sbin/expiretable -v -t 3600 virusprot)
+(root) CMD (/usr/bin/nice -n20 /usr/local/sbin/expiretable -v -t 3600 webConfiguratorlockout)
+(root) CMD (/usr/bin/nice -n20 /usr/local/sbin/expiretable -v -t 3600 sshlockout)
+(root) CMD (/usr/bin/nice -n20 /usr/local/sbin/expiretable -v -t 3600 virusprot)
