@@ -6,14 +6,19 @@
 # Edited 19 Sep 2016 by FoxBoxsnet
 #
 # Usage: Use with following GROK match pattern
-## Fluent FORMAT : %{SYSLOGTIMESTAMP:date} %{SYSLOGPROG}: %{PFSENSE}
+## Fluent FORMAT : %{SYSLOGTIMESTAMP:date} %{PF_PROG}: %{PFSENSE}
 ## IPv4          : %{LOG_DATA}%{IP_SPECIFIC_DATA}%{IP_DATA}%{PROTOCOL_DATA}
 ## IPv6          : %{LOG_DATA}%{IP_SPECIFIC_DATA}%{IP_DATA}
 
+# Programs
+PFSENSE (%{FILTER}|%{DHCPD}|%{PHP-FPM}|%{PF_EXCLUDE})
+PF_PROG ((filterlog)|%{SYSLOGPROG})
+PF_EXCLUDE %{SYSLOGTIMESTAMP:date} %{PF_PROG}: %{GREEDYDATA:message}
+
 # logformat
-PFSENSE (%{FILTER_LOG}|%{DHCPD_DHCPD}|%{PHP-FPM}|%{GREEDYDATA:message})
-FILTER_LOG (%{FILTER_LOG_DATA}%{FILTER_IP_SPECIFIC_DATA}%{FILTER_IP_DATA}%{FILTER_PROTOCOL_DATA})
-DHCPD_DHCPD (%{DHCPD_DHCPDISCOVER}|%{DHCPD_DHCPOFFER}|%{DHCPD_DHCPREQUEST}|%{DHCPD_DHCPACK}|%{DHCPD_DHCPINFORM}|%{DHCPD_DHCPRELEASE})
+FILTER (%{FILTER_LOG_DATA}%{FILTER_IP_SPECIFIC_DATA}%{FILTER_IP_DATA}%{FILTER_PROTOCOL_DATA})
+DHCPD (%{DHCPD_DHCPDISCOVER}|%{DHCPD_DHCPOFFER}|%{DHCPD_DHCPREQUEST}|%{DHCPD_DHCPACK}|%{DHCPD_DHCPINFORM}|%{DHCPD_DHCPRELEASE})
+
 
 
 
@@ -63,7 +68,15 @@ DHCPD_DHCPINFORM %{WORD:dhcp_action} from %{IPV4:dhcp_client_ip} via %(?<dhcp_cl
 DHCPD_DHCPRELEASE %{WORD:dhcp_action} of %{IPV4:dhcp_client_ip} from %{COMMONMAC:dhcp_client_mac}%{SPACE}(\(%{GREEDYDATA:dhcp_client_hostname}\))? via (?<dhcp_client_vlan>[0-9a-z_]*) %{GREEDYDATA:dhcp_release_message}
 
 ## OpenVPN
+OPENVPN_USER_AUTH user '%{WORD:pf_user}' 
+
+Sep 26 23:23:51 openvpn: user 'admin' authenticated
+Sep 26 23:37:50 openvpn[60316]: admin/192.168.0.111:11111 Connection reset, restarting [-1]
+Sep 27 09:32:10 openvpn[60316]: TCP connection established with [AF_INET]118.21.39.38:3992
+Sep 27 09:32:11 openvpn[60316]: 118.21.39.38:3992 [admin] Peer Connection Initiated with [AF_INET]118.21.39.38:3992
+Sep 27 09:32:11 openvpn: user 'admin' authenticated
+Sep 27 09:32:14 openvpn[60316]: admin/118.21.39.38:3992 send_push_reply(): safe_cap=940
 
 
 ## php-fpm
-PHP-FPM Successful %{WORD:php-fpm_status} for user '%{WORD:php-fpm_user}' from: %{IPV4:src_ip}
+PHP-FPM Successful %{WORD:php-fpm_status} for user '%{WORD:pf_user}' from: %{IPV4:src_ip}
