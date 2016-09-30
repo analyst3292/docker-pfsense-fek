@@ -12,14 +12,14 @@
 # logformat
 PFSENSE_SYSLOG_PATTERN %{SYSLOGTIMESTAMP:date} (%{PFSENSE_PT1}|%{PFSENSE_PT2})
 PFSENSE_PT1 %{SYSLOGPROG}: %{PFSENSE}
-PFSENSE_PT2 %{NGINX}
+PFSENSE_PT2 %{IPORHOST:host} %{SYSLOGPROG}: (%{NGINX}|%{GREEDYDATA:message})
 PFSENSE (%{FILTER}|%{DHCPD}|%{PHP_FPM}|%{OPENVPN}|%{GREEDYDATA:message})
 
 
 FILTER (%{FILTER_LOG_DATA}%{FILTER_IP_SPECIFIC_DATA}%{FILTER_IP_DATA}%{FILTER_PROTOCOL_DATA})
 DHCPD (%{DHCPD_DHCPDISCOVER}|%{DHCPD_DHCPOFFER}|%{DHCPD_DHCPREQUEST}|%{DHCPD_DHCPACK}|%{DHCPD_DHCPINFORM}|%{DHCPD_DHCPRELEASE})
-PHP_FPM (%{PHP_FPM_LOGIN}|&{PHP_FPM_LOGOUT}|%{PHP_FPMM_FAILD})
-OPENVPN (%{OPENVPN_USER_AUTH}|%{OPENVPN_PEER_CONN}|%{OPENVPN_USER_SEND}|%{OPENVPN_CONN_RESET}|%{OPENVPN_CONN})
+PHP_FPM (%{PHP_FPM_AUTH}|%{PHP_FPM_FAILD})
+OPENVPN (%{OPENVPN_AUTH_USER}|%{OPENVPN_AUTH_ERROR}|%{OPENVPN_PEER_CONN}|%{OPENVPN_USER_SEND}|%{OPENVPN_CONN}|%{OPENVPN_CONN_RESET}|%{OPENVPN_CMD})
 
 ## Filter log
 FILTER_LOG_DATA (%{INT:rule}),(%{INT:sub_rule}),,(%{INT:tracker}),(%{WORD:iface}),(%{WORD:reason}),(%{WORD:action}),(%{WORD:rule_direction}),(%{INT:ip_ver}),
@@ -65,17 +65,20 @@ DHCPD_DHCPINFORM %{WORD:dhcp_action} from %{IPV4:dhcp_client_ip} via %(?<dhcp_cl
 DHCPD_DHCPRELEASE %{WORD:dhcp_action} of %{IPV4:dhcp_client_ip} from %{COMMONMAC:dhcp_client_mac}%{SPACE}(\(%{GREEDYDATA:dhcp_client_hostname}\))? via (?<dhcp_client_vlan>[0-9a-z_]*) %{GREEDYDATA:dhcp_release_message}
 
 ## OpenVPN
-OPENVPN_USER_AUTH user '%{USERNAME:pf_user}' authenticated
+OPENVPN_AUTH_USER user '%{USERNAME:pf_user}'(%{SPACE}could%{SPACE}not%{SPACE}|%{SPACE})(authenticated|authenticate.)
+OPENVPN_AUTH_ERROR 118.21.39.38:34539 TLS Auth Error: Auth Username/Password verification failed for peer
 OPENVPN_PEER_CONN %{IP:src_ip}:%{INT:src_port} \[%{USERNAME:pf_user}\] Peer Connection Initiated with \[AF_INET\]%{IP:src_ip}:%{INT:src_port}
 OPENVPN_USER_SEND %{USERNAME:pf_user}/%{IP:src_ip}:%{INT:src_port} send_push_reply\(\): safe_cap=%{WORD:openvpn_safe_cap}
-OPENVPN_CONN_RESET %{USERNAME:pf_user}/%{IP:src_ip}:%{INT:src_port} Connection reset, restarting \[%{INT:openvpn_conn_cnt}\]
 OPENVPN_CONN %{WORD} connection established with \[%{WORD}\]%{IP:src_ip}:%{INT:src_port}
+OPENVPN_CONN_RESET (%{USERNAME:pf_user}/|)%{IP:src_ip}:%{INT:src_port} Connection reset, restarting \[%{INT:openvpn_conn_cnt}\]
+OPENVPN_CMD (%{OPENVPN_CMD_FAILD_RUN_CMD})
+OPENVPN_CMD_FAILD_RUN_CMD Failed running command \(%{DATA:openvpn_faild_run_cmd}\): external program exited with error status: %{INT:openvpn_faild_run_status}
 
 
 ## php-fpm
-PHP_FPM_LOGIN %{URIPATH:php-fpm_url}: Successful %{WORD:php-fpm_status} for user '%{WORD:pf_user}' from: %{IP:src_ip}
-PHP_FPM_LOGOUT %{URIPATH:php-fpm_url}: User %{WORD:php-fpm_status} out for user '%{WORD:pf_user}' from: %{IP:src_ip}
-PHP_FPMM_FAILD %{URIPATH:php-fpm_url}: webConfigurator authentication %{WORD:php-fpm_status} for '%{WORD:pf_user}' from %{IP:src_ip}
+PHP_FPM_AUTH %{URIPATH:php-fpm_url}: (Successful|User) (%{WORD:php-fpm_status}|%{PHP_FPM_LOGOUT:php-fpm_status}) for user '%{WORD:pf_user}' from: %{IP:src_ip}
+PHP_FPM_LOGOUT (logged%{SPACE}out)
+PHP_FPM_FAILD %{URIPATH:php-fpm_url}: webConfigurator authentication %{WORD:php-fpm_status} for '%{WORD:pf_user}' from %{IP:src_ip}
 
 # nginx
-NGINX %{IPORHOST:host} %{SYSLOGPROG}: %{IP:src_ip} -(%{WORD:php-fpm-remote-user}|%{SPACE})- \[%{HTTPDATE:timestamp}\] "%{WORD:nginx-status} %{URIPATHPARAM:nginx-path} HTTP/%{NUMBER:nginx-httpver}" %{INT:nginx-statuscode} %{INT:nginx-length} "%{URI:referrer}" "%{GREEDYDATA:nginx-user_agent}"
+NGINX %{IP:src_ip} -(%{WORD:php-fpm-remote-user}|%{SPACE})- \[%{HTTPDATE:timestamp}\] "%{WORD:nginx-status} %{URIPATHPARAM:nginx-path} HTTP/%{NUMBER:nginx-httpver}" %{INT:nginx-statuscode} %{INT:nginx-length} "(%{URI:referrer}|-)" "%{GREEDYDATA:nginx-user_agent}"

@@ -10,6 +10,10 @@ Sep 29 12:16:06 openvpn[60316]: 192.168.11.1:54411 Connection reset, restarting 
 Sep 29 12:15:55 openvpn[60316]: user1/192.168.11.1:5427 Connection reset, restarting [-1]
 Sep 29 12:16:02 openvpn[60316]: TCP connection established with [AF_INET]192.168.11.1:54411
 
+Sep 29 12:16:02 openvpn[60316]: user 'user1' could not authenticate.
+Sep 29 12:16:02 openvpn[60316]: 192.168.11.1:34539 WARNING: Failed running command (--auth-user-pass-verify): external program exited with error status: 1
+Sep 29 12:16:02 openvpn[60316]: 192.168.11.1:34539 TLS Auth Error: Auth Username/Password verification failed for peer
+Sep 29 12:16:02 openvpn[60316]: 192.168.11.1:34539 Connection reset, restarting [0]
 
 
 Sep 27 03:30:53 filterlog: 5,16777216,,1000000103,em0,match,block,in,4,0x2,0,46,8704,0,none,6,tcp,44,87.97.174.102,192.168.11.1,16774,23,0,S,1995451437,,29405,,mss
@@ -29,8 +33,8 @@ Sep 27 10:27:46 php-fpm: /index.php: Successful login for user 'admin' from: 192
 Sep 29 14:00:15 php-fpm[50070]: /index.php: User logged out for user 'admin' from: 192.168.11.1
 Sep 27 10:27:46 php-fpm: /status_logs_settings.php: webConfigurator authentication error for 'admin' from 192.168.11.1
 
-Sep 28 23:19:12 hostname nginx: 192.168.11.1 - - [28/Sep/2016:23:19:12 +0900] "POST /widgets/widgets/gateways.widget.php HTTP/1.1" 200 200 "http://192.168.11.251/" "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/53.0.2785.116 Safari/537.36 Kinza/3.4.0"
-
+Sep 28 23:19:12 hostname nginx: 192.168.11.1 - - [28/Sep/2016:23:19:12 +0900] "POST /widgets/widgets/gateways.widget.php HTTP/1.1" 200 200 "http://192.168.11.1/" "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/53.0.2785.116 Safari/537.36 Kinza/3.4.0"
+Sep 30 09:25:45 hostname nginx: 192.168.11.1 - - [30/Sep/2016:09:25:45 +0900] "GET / HTTP/1.1" 200 1586 "-" "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/53.0.2785.116 Safari/537.36 Kinza/3.4.0"
 
 
 (root) CMD (/usr/bin/nice -n20 /usr/local/sbin/expiretable -v -t 3600 webConfiguratorlockout)
