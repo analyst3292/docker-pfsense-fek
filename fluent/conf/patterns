@@ -71,7 +71,7 @@ OPENVPN_PEER_CONN %{IP:src_ip}:%{INT:src_port} \[%{USERNAME:pf_user}\] Peer Conn
 OPENVPN_USER_SEND %{USERNAME:pf_user}/%{IP:src_ip}:%{INT:src_port} send_push_reply\(\): safe_cap=%{WORD:openvpn_safe_cap}
 OPENVPN_CONN %{WORD} connection established with \[%{WORD}\]%{IP:src_ip}:%{INT:src_port}
 OPENVPN_CONN_RESET (%{USERNAME:pf_user}/|)%{IP:src_ip}:%{INT:src_port} Connection reset, restarting \[%{INT:openvpn_conn_cnt}\]
-OPENVPN_CMD (%{OPENVPN_CMO_FAILD_RUN_CMO})
+OPENVPN_CMD (%{OPENVPN_CMD_FAILD_RUN_CMD})
 OPENVPN_CMD_FAILD_RUN_CMD Failed running command \(%{DATA:openvpn_faild_run_cmd}\): external program exited with error status: %{INT:openvpn_faild_run_status}
 
 
