@@ -78,4 +78,4 @@ PHP_FPM_LOGOUT %{URIPATH:php-fpm_url}: User %{WORD:php-fpm_status} out for user 
 PHP_FPMM_FAILD %{URIPATH:php-fpm_url}: webConfigurator authentication %{WORD:php-fpm_status} for '%{WORD:pf_user}' from %{IP:src_ip}
 
 # nginx
-NGINX %{IPORHOST:host} %{SYSLOGPROG}: %{IP:src_ip} -(%{WORD:php-fpm-remote-user}|%{SPACE})- \[%{HTTPDATE:timestamp}\] "%{WORD:nginx-status} %{URIPATHPARAM:nginx-path} HTTP/%{NUMBER:nginx-httpver}" %{INT:nginx-statuscode} %{INT:nginx-length} "%{URI:referrer}" "%{GREEDYDATA:nginx-user_agent}"
+NGINX %{IPORHOST:host} %{SYSLOGPROG}: %{IP:src_ip} -(%{WORD:php-fpm-remote-user}|%{SPACE})- \[%{HTTPDATE:timestamp}\] "%{WORD:nginx-status} %{URIPATHPARAM:nginx-path} HTTP/%{NUMBER:nginx-httpver}" %{INT:nginx-statuscode} %{INT:nginx-length} "(%{URI:referrer}|-)" "%{GREEDYDATA:nginx-user_agent}"
