@@ -7,8 +7,8 @@ USER root
 RUN \
 	   apk add --no-cache --virtual .build-gem \
             git \
-#    && gem install specific_install \
-#    && gem specific_install -l 'git://github.com/FoxBoxsnet/fluent-plugin-resolv-filter.git' \
+    && gem install specific_install \
+    && gem specific_install -l 'git@github.com:FoxBoxsnet/fluent-plugin-filter-geoip.git' \
 	&& gem install fluent-plugin-secure-forward \
 	&& gem install fluent-plugin-elasticsearch \
 	&& gem install fluent-plugin-grok-parser \
