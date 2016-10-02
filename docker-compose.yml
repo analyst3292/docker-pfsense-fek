@@ -12,6 +12,7 @@ fluent:
   container_name: fluent
   environment:
     TIMEZONE: "Asia/Tokyo"
+    HOSTNAME: "air-foron.com"
   ports:
     - "5514:5514/udp"
   links:
