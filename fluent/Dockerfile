@@ -21,6 +21,8 @@ RUN \
 EXPOSE 5140/udp
 
 USER fluent
-COPY conf/ /fluentd/etc/
+COPY /fluent.conf /fluentd/etc/
+COPY /conf.d /fluentd/etc/
+
 WORKDIR /home/fluent
 CMD fluentd -c /fluentd/etc/fluent.conf -p /fluentd/plugins -vv
