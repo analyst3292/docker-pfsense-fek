@@ -1,12 +1,15 @@
 {
-  "pfsense-2016.09.24": {
+  "pfsense-2016.10.03": {
     "aliases": {},
     "mappings": {
-      "PFSense": {
+      "fluentd": {
         "properties": {
           "@timestamp": {
             "type": "date",
             "format": "strict_date_optional_time||epoch_millis"
+          },
+          "ack_number": {
+            "type": "integer"
           },
           "data_length": {
             "type": "integer"
@@ -17,15 +20,17 @@
           "evtid": {
             "type": "integer"
           },
-          "geoip": {
-            "properties": {
-              "location": {
-                "type": "double"
-              }
-            }
+          "geo_location_latitude": {
+            "type":"geo_point"
+          },
+          "geo_location_longitude": {
+            "type":"geo_point"
           },
           "hop_limit": {
             "type": "integer"
+          },
+          "sequence_number": {
+            "type": "long"
           },
           "id": {
             "type": "integer"
@@ -39,14 +44,17 @@
           "offset": {
             "type": "integer"
           },
+          "openvpn_safe_cap": {
+            "type": "integer"
+          },
+          "pid": {
+            "type": "integer"
+          },
           "proto_id": {
             "type": "integer"
           },
           "rule": {
             "type": "integer"
-          },
-          "sequence_number": {
-            "type": "long"
           },
           "src_port": {
             "type": "integer"
@@ -60,7 +68,6 @@
           "tracker": {
             "type": "integer"
           },
-          "ttl": {
             "type": "integer"
           },
           "ack_number": {
