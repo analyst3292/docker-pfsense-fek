@@ -1,126 +1,128 @@
 {
-  "pfsense-2016.10.03": {
-    "aliases": {},
-    "mappings": {
-      "fluentd": {
-        "properties": {
-          "@timestamp": {
-            "type": "date",
-            "format": "strict_date_optional_time||epoch_millis"
-          },
-          "ack_number": {
-            "type": "integer"
-          },
-          "data_length": {
-            "type": "integer"
-          },
-          "dest_port": {
-            "type": "integer"
-          },
-          "evtid": {
-            "type": "integer"
-          },
-          "geo_location_latitude": {
-            "type":"geo_point"
-          },
-          "geo_location_longitude": {
-            "type":"geo_point"
-          },
-          "hop_limit": {
-            "type": "integer"
-          },
-          "sequence_number": {
-            "type": "long"
-          },
-          "id": {
-            "type": "integer"
-          },
-          "ip_ver": {
-            "type": "integer"
-          },
-          "length": {
-            "type": "integer"
-          },
-          "offset": {
-            "type": "integer"
-          },
-          "openvpn_safe_cap": {
-            "type": "integer"
-          },
-          "pid": {
-            "type": "integer"
-          },
-          "proto_id": {
-            "type": "integer"
-          },
-          "rule": {
-            "type": "integer"
-          },
-          "src_port": {
-            "type": "integer"
-          },
-          "sub_rule": {
-            "type": "integer"
-          },
-          "tcp_window": {
-            "type": "integer"
-          },
-          "tracker": {
-            "type": "integer"
-          },
-            "type": "integer"
-          },
-          "ack_number": {
-            "type": "integer"
-          },
-          "icmp_echo_id": {
-            "type": "integer"
-          },
-          "icmp_echo_sequence": {
-            "type": "integer"
-          },
-          "icmp_unreachport_port": {
-            "type": "integer"
-          },
-          "icmp_need_flag_mtu": {
-            "type": "integer"
-          },
-          "icmp_tstamp_id": {
-            "type": "integer"
-          },
-          "icmp_tstamp_sequence": {
-            "type": "integer"
-          },
-          "icmp_tstamp_reply_id": {
-            "type": "integer"
-          },
-          "icmp_tstamp_reply_sequence": {
-            "type": "integer"
-          },
-          "icmp_tstamp_reply_otime": {
-            "type": "integer"
-          },
-          "icmp_tstamp_reply_rtime": {
-            "type": "integer"
-          },
-          "icmp_tstamp_reply_ttime": {
-            "type": "integer"
-          },
-          "carp_ttl": {
-            "type": "integer"
-          },
-          "carp_vhid": {
-            "type": "integer"
-          },
-          "carp_version": {
-            "type": "integer"
-          },
-          "carp_advbase": {
-            "type": "integer"
-          },
-          "carp_advskew": {
-            "type": "integer"
+  "template": "pfsense-*",
+  "settings": {
+    "number_of_shards": 3,
+    "number_of_replicas": 1
+  },
+  "mappings": {
+    "_default_": {
+      "dynamic_templates": [
+        {
+          "string_template": {
+            "mapping": {
+              "index": "not_analyzed",
+              "type": "string"
+            },
+            "match_mapping_type": "string",
+            "match": "*"
           }
+        }
+      ],
+      "properties": {
+        "ack_number": {
+          "type": "integer"
+        },
+        "carp_advbase": {
+          "type": "integer"
+        },
+        "carp_advskew": {
+          "type": "integer"
+        },
+        "carp_ttl": {
+          "type": "integer"
+        },
+        "carp_version": {
+          "type": "integer"
+        },
+        "carp_vhid": {
+          "type": "integer"
+        },
+        "data_length": {
+          "type": "integer"
+        },
+        "dest_port": {
+          "type": "integer"
+        },
+        "evtid": {
+          "type": "integer"
+        },
+        "geo_location_location": {
+          "type": "geo_point"
+        },
+        "hop_limit": {
+          "type": "integer"
+        },
+        "icmp_echo_id": {
+          "type": "integer"
+        },
+        "icmp_echo_sequence": {
+          "type": "integer"
+        },
+        "icmp_need_flag_mtu": {
+          "type": "integer"
+        },
+        "icmp_tstamp_id": {
+          "type": "integer"
+        },
+        "icmp_tstamp_reply_id": {
+          "type": "integer"
+        },
+        "icmp_tstamp_reply_otime": {
+          "type": "integer"
+        },
+        "icmp_tstamp_reply_rtime": {
+          "type": "integer"
+        },
+        "icmp_tstamp_reply_sequence": {
+          "type": "integer"
+        },
+        "icmp_tstamp_reply_ttime": {
+          "type": "integer"
+        },
+        "icmp_tstamp_sequence": {
+          "type": "integer"
+        },
+        "icmp_unreachport_port": {
+          "type": "integer"
+        },
+        "id": {
+          "type": "integer"
+        },
+        "ip_ver": {
+          "type": "integer"
+        },
+        "length": {
+          "type": "integer"
+        },
+        "offset": {
+          "type": "integer"
+        },
+        "openvpn_safe_cap": {
+          "type": "integer"
+        },
+        "pid": {
+          "type": "integer"
+        },
+        "proto_id": {
+          "type": "integer"
+        },
+        "rule": {
+          "type": "integer"
+        },
+        "sequence_number": {
+          "type": "long"
+        },
+        "src_port": {
+          "type": "integer"
+        },
+        "sub_rule": {
+          "type": "integer"
+        },
+        "tcp_window": {
+          "type": "integer"
+        },
+        "tracker": {
+          "type": "integer"
         }
       }
     }
