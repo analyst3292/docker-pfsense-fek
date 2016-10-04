@@ -26,6 +26,7 @@ RUN \
 	&& gem install fluent-plugin-grok-parser \
 	&& gem install fluent-plugin-ignore-filter \
 	&& gem install fluent-plugin-resolv-filter \
+	&& gem install fluent-plugin-protocols-filter \
 	\
 	&& apk del .build-gem
 
