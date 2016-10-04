@@ -46,6 +46,9 @@
         "evtid": {
           "type": "integer"
         },
+        "geo_location_location": {
+            "type": "geo_point"
+          },
         "hop_limit": {
           "type": "integer"
         },
