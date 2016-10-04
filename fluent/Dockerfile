@@ -24,6 +24,7 @@ EXPOSE 5140/udp
 
 USER fluent
 COPY /fluent.conf /fluentd/etc/
+COPY /pfsense-mapping.json /fluentd/etc/
 COPY /conf.d /fluentd/etc/conf.d
 COPY docker-entrypoint.sh /
 
