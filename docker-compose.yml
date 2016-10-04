@@ -1,5 +1,5 @@
 elasticsearch:
-  image: airforon/elasticsearch
+  image: elasticsearch:5.0
   container_name: elasticsearch
   ports:
     - 9200:9200
@@ -18,7 +18,7 @@ fluent:
   links:
     - elasticsearch
 kibana:
-  image: airforon/kibana
+  image: kibana:5.0
   container_name: kibana
   ports:
     - 9204:5601
