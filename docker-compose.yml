@@ -1,10 +1,12 @@
 elasticsearch:
-  image: elasticsearch:5.0
+  image: airforon/elasticsearch
   container_name: elasticsearch
-  environment:
-    ES_JAVA_OPTS: "-Xms1g -Xmx1g"
   ports:
     - 9200:9200
+  environment:
+    CLUSTER_NAME: "es"
+    NODE_NAME: "node0"
+    NODE_RACK: "es1"
 fluent:
   build: fluent
   container_name: fluent
@@ -16,7 +18,7 @@ fluent:
   links:
     - elasticsearch
 kibana:
-  image: kibana:5.0
+  image: airforon/kibana
   container_name: kibana
   ports:
     - 9204:5601
