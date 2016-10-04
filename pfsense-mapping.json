@@ -46,22 +46,6 @@
         "evtid": {
           "type": "integer"
         },
-          "geo": {
-            "properties": {
-              "city": {
-                "type": "string"
-              },
-              "coordinates": {
-                "type": "geo_point"
-              },
-              "country_code": {
-                "type": "string"
-              },
-              "region_code": {
-                "type": "string"
-              }
-            }
-          },
         "hop_limit": {
           "type": "integer"
         },
