@@ -27,5 +27,5 @@ USER fluent
 COPY /fluent.conf /docker-entrypoint.sh /pfsense-mapping.json /fluentd/etc/
 COPY /conf.d /fluentd/etc/conf.d
 WORKDIR /home/fluent
-ENTRYPOINT [ "/fluentd/etc/docker-entrypoint.sh" ]
+#ENTRYPOINT [ "/fluentd/etc/docker-entrypoint.sh" ]
 CMD [ "fluentd", "-c", "/fluentd/etc/fluent.conf", "-p", "/fluentd/plugins", "-vv" ]
