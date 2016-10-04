@@ -3,6 +3,7 @@ elasticsearch:
   container_name: elasticsearch
   ports:
     - 9200:9200
+    - 9300:9300
 fluent:
   build: fluent
   container_name: fluent
