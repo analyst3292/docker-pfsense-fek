@@ -14,7 +14,7 @@ RUN \
 	&& gem install fluent-plugin-elasticsearch \
 	&& gem install fluent-plugin-grok-parser \
 	&& gem install fluent-plugin-ignore-filter \
-	&& gem install fluent-plugin-resolv-filter 
+	&& gem install fluent-plugin-resolv-filter \
 #	&& gem install fluent-plugin-geoip-filter \
 	\
 	&& apk del .build-gem
