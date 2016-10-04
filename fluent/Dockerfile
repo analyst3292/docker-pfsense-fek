@@ -4,10 +4,16 @@ FROM fluent/fluentd:latest
 ENV PATH /home/fluent/.gem/ruby/2.3.0/bin:$PATH
 
 USER root
+
+COPY /fluent.conf /docker-entrypoint.sh /pfsense-mapping.json /fluentd/etc/
+COPY /conf.d /fluentd/etc/conf.d
+WORKDIR /home/fluent
+
 RUN \
 	   apk add --no-cache curl \
 	&& apk add --no-cache --virtual .build-gem \
             git \
+	&& chown -R fluent:fluent /fluentd/etc/ \
     && gem install specific_install \
     && gem specific_install -l 'git://github.com/FoxBoxsnet/fluent-plugin-filter-geo.git' \
 	&& gem specific_install -l 'git://github.com/FoxBoxsnet/fluent-plugin-protocols-filter.git' \
@@ -24,8 +30,5 @@ EXPOSE 5140/udp
 
 USER fluent
 
-COPY /fluent.conf /docker-entrypoint.sh /pfsense-mapping.json /fluentd/etc/
-COPY /conf.d /fluentd/etc/conf.d
-WORKDIR /home/fluent
-#ENTRYPOINT [ "/fluentd/etc/docker-entrypoint.sh" ]
+ENTRYPOINT [ "/fluentd/etc/docker-entrypoint.sh" ]
 CMD [ "fluentd", "-c", "/fluentd/etc/fluent.conf", "-p", "/fluentd/plugins", "-vv" ]
