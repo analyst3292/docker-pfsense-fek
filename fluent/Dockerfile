@@ -6,8 +6,8 @@ ENV PATH /home/fluent/.gem/ruby/2.3.0/bin:$PATH
 USER root
 
 COPY /fluent.conf /docker-entrypoint.sh /fluentd/etc/
-COPY /pfsense-mapping.json /fluentd/etc/mapping/
-COPY /conf.d /fluentd/etc/conf.d
+COPY /mapping /fluentd/etc/mapping/
+COPY /conf.d /fluentd/etc/conf.d/
 WORKDIR /home/fluent
 
 RUN \
