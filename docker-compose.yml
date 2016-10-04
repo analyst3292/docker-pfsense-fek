@@ -7,14 +7,14 @@ elasticsearch:
     CLUSTER_NAME: "es"
     NODE_NAME: "node0"
     NODE_RACK: "es1"
-fluent:
-  build: fluent
-  container_name: fluent
+logstash:
+  build: logstash/5.0.0
+  container_name: logstash
   environment:
     TIMEZONE: "Asia/Tokyo"
     HOSTNAME: "air-foron.com"
   ports:
-    - "5514:5514/udp"
+    - "5140:5140/udp"
   links:
     - elasticsearch
 kibana:
