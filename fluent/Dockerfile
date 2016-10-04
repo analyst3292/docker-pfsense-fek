@@ -27,6 +27,6 @@ COPY /fluent.conf /fluentd/etc/
 COPY /conf.d /fluentd/etc/conf.d
 COPY docker-entrypoint.sh /
 
-WORKDIR /home/fluent
 ENTRYPOINT [ "/docker-entrypoint.sh" ]
+WORKDIR /home/fluent
 CMD fluentd -c /fluentd/etc/fluent.conf -p /fluentd/plugins -vv
