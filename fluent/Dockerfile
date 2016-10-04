@@ -13,6 +13,7 @@ RUN \
 	   apk add --no-cache \
 	   		curl \
 			bash \
+			coreutils \
 	&& apk add --no-cache --virtual .build-gem \
             git \
 	&& chown -R fluent:fluent /fluentd/etc/ \
