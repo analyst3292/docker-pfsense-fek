@@ -3,7 +3,7 @@
 #// docker-entrypoint.sh
 #//==============================================
 
-MAPPING_FILE=/fluentd/etc/pfsense-mapping.json
+MAPPING_FILE=/fluentd/etc/mapping/pfsense-mapping.json
 
 echo "Sleep 30s"
 sleep 30
