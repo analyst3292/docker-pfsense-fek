@@ -3,10 +3,6 @@ elasticsearch:
   container_name: elasticsearch
   ports:
     - 9200:9200
-  environment:
-    CLUSTER_NAME: "es"
-    NODE_NAME: "node0"
-    NODE_RACK: "es1"
 fluent:
   build: fluent
   container_name: fluent
