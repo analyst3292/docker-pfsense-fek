@@ -1,6 +1,8 @@
 elasticsearch:
   image: elasticsearch:5.0
   container_name: elasticsearch
+  environment:
+    ES_JAVA_OPTS="-Xms1g -Xmx1g"
   ports:
     - 9200:9200
     - 9300:9300
