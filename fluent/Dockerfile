@@ -10,7 +10,9 @@ COPY /conf.d /fluentd/etc/conf.d
 WORKDIR /home/fluent
 
 RUN \
-	   apk add --no-cache curl \
+	   apk add --no-cache \
+	   		curl \
+			bash \
 	&& apk add --no-cache --virtual .build-gem \
             git \
 	&& chown -R fluent:fluent /fluentd/etc/ \
@@ -28,7 +30,6 @@ RUN \
 
 EXPOSE 5140/udp
 
-USER fluent
-
 ENTRYPOINT [ "/fluentd/etc/docker-entrypoint.sh" ]
+USER fluent
 CMD [ "fluentd", "-c", "/fluentd/etc/fluent.conf", "-p", "/fluentd/plugins", "-vv" ]
