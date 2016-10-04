@@ -23,12 +23,11 @@ RUN \
 EXPOSE 5140/udp
 
 USER fluent
+WORKDIR /home/fluent
 COPY /fluent.conf /fluentd/etc/
 COPY /pfsense-mapping.json /fluentd/etc/
 COPY /conf.d /fluentd/etc/conf.d
 COPY docker-entrypoint.sh /
 
-
-WORKDIR /home/fluent
-ENTRYPOINT ["/docker-entrypoint.sh"]
-CMD fluentd -c /fluentd/etc/fluent.conf -p /fluentd/plugins -vv
+ENTRYPOINT [ "/docker-entrypoint.sh" ]
+CMD [ "fluentd", "-c", "/fluentd/etc/fluent.conf", "-p", "/fluentd/plugins", "-vv" ]
