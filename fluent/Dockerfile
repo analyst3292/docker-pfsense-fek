@@ -5,7 +5,8 @@ ENV PATH /home/fluent/.gem/ruby/2.3.0/bin:$PATH
 
 USER root
 
-COPY /fluent.conf /docker-entrypoint.sh /pfsense-mapping.json /fluentd/etc/
+COPY /fluent.conf /docker-entrypoint.sh /fluentd/etc/
+COPY /pfsense-mapping.json /fluentd/etc/mapping/
 COPY /conf.d /fluentd/etc/conf.d
 WORKDIR /home/fluent
 
@@ -19,7 +20,7 @@ RUN \
 	&& chown -R fluent:fluent /fluentd/etc/ \
     && gem install specific_install \
     && gem specific_install -l 'git://github.com/FoxBoxsnet/fluent-plugin-filter-geo.git' \
-	&& gem specific_install -l 'git://github.com/FoxBoxsnet/fluent-plugin-protocols-filter.git' \
+#	&& gem specific_install -l 'git://github.com/FoxBoxsnet/fluent-plugin-protocols-filter.git' \
 	&& gem install fluent-plugin-secure-forward \
 	&& gem install fluent-plugin-elasticsearch \
 	&& gem install fluent-plugin-grok-parser \
