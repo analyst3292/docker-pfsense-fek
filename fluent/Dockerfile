@@ -20,7 +20,6 @@ RUN \
 	&& chown -R fluent:fluent /fluentd/etc/ \
     && gem install specific_install \
     && gem specific_install -l 'git://github.com/FoxBoxsnet/fluent-plugin-filter-geo.git' \
-#	&& gem specific_install -l 'git://github.com/FoxBoxsnet/fluent-plugin-protocols-filter.git' \
 	&& gem install fluent-plugin-secure-forward \
 	&& gem install fluent-plugin-elasticsearch \
 	&& gem install fluent-plugin-grok-parser \
