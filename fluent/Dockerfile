@@ -17,6 +17,7 @@ RUN \
 			coreutils \
 	&& apk add --no-cache --virtual .build-gem \
             git \
+			build-base \
 	&& chown -R fluent:fluent /fluentd/etc/ \
     && gem install specific_install \
     && gem specific_install -l 'git://github.com/FoxBoxsnet/fluent-plugin-filter-geo.git' \
