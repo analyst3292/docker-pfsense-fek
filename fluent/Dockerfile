@@ -37,4 +37,4 @@ EXPOSE 5140/udp
 
 ENTRYPOINT [ "/fluentd/etc/docker-entrypoint.sh" ]
 USER fluent
-CMD [ "fluentd", "-c", "/fluentd/etc/fluent.conf", "-p", "/fluentd/plugins", "-vv" ]
+CMD [ "fluentd", "-c", "/fluentd/etc/fluent.conf", "-p", "/fluentd/plugins", "-qq" ]
