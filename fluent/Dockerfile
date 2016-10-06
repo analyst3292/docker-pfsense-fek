@@ -17,6 +17,7 @@ RUN \
 			coreutils \
 	&& apk add --no-cache --virtual .build-gem \
             git \
+			ruby-dev \
 			build-base \
 	&& chown -R fluent:fluent /fluentd/etc/ \
     && gem install specific_install \
