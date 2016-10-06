@@ -16,18 +16,20 @@ RUN \
 			bash \
 			coreutils \
 	&& apk add --no-cache --virtual .build-gem \
-            git \
+			git \
 			ruby-dev \
 			build-base \
 	&& chown -R fluent:fluent /fluentd/etc/ \
-    && gem install specific_install \
-    && gem specific_install -l 'git://github.com/FoxBoxsnet/fluent-plugin-filter-geo.git' \
+	&& gem install specific_install \
+	&& gem specific_install -l 'git://github.com/FoxBoxsnet/fluent-plugin-filter-geo.git' \
+	&& gem specific_install -l 'git://github.com/FoxBoxsnet/fluent-plugin-protocols-filter.git' \
+	&& gem specific_install -l 'git://github.com/FoxBoxsnet/fluent-plugin-resolv-filter.git' \
 	&& gem install fluent-plugin-secure-forward \
 	&& gem install fluent-plugin-elasticsearch \
 	&& gem install fluent-plugin-grok-parser \
 	&& gem install fluent-plugin-ignore-filter \
-	&& gem install fluent-plugin-resolv-filter \
-	&& gem install fluent-plugin-protocols-filter \
+#	&& gem install fluent-plugin-resolv-filter \
+#	&& gem install fluent-plugin-protocols-filter \
 	\
 	&& apk del .build-gem
 
