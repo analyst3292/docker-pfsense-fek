@@ -18,7 +18,7 @@ fluent:
   links:
     - elasticsearch
 kibana:
-  image: airforon/kibana
+  build: kibana
   container_name: kibana
   ports:
     - 9204:5601
