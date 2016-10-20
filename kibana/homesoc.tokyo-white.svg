@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<svg width="252px" x="0px" y="0px" height="45px" viewBox="0 0 252 45" xmlns="http://www.w3.org/2000/svg">
-  <g>
+<svg x="0px" y="0px" width="252px" height="45px" viewBox="0 0 252 45" xmlns="http://www.w3.org/2000/svg">
+  <g transform="matrix(0.566335, 0, 0, 0.502756, -0.085623, 0.975897)">
     <g class="logo-entity" id="subtitle" transform="matrix(0.667348, 0, 0, 0.652609, 99.738739, 60.099182)">
       <g class="logo-entity-inner">
         <text class="[object Object]" transform="matrix(0.926595, 0, 0, 1, 14.921865, -1.525887)" style="dominant-baseline: text-before-edge; fill: rgb(255, 255, 255); font-family: Montserrat; font-size: 30px; font-style: italic; font-weight: bold; white-space: pre; alignment-baseline: text-before-edge;">Home Security Operation Center Tokyo</text>
