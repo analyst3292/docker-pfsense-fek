@@ -7,6 +7,8 @@ elasticsearch:
     CLUSTER_NAME: "es"
     NODE_NAME: "node0"
     NODE_RACK: "es1"
+  volumes:
+    ~/data/elasticsearch:/usr/share/elasticsearch/
 fluent:
   build: fluent
   container_name: fluent
